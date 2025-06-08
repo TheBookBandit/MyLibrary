@@ -1,0 +1,98 @@
+[
+  {
+    "title": "Loukas Grafakos - Classical Fourier analysis",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Loukas Grafakos - Classical Fourier analysis.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Loukas Grafakos - Classical Fourier analysis.jpg"
+  },
+  {
+    "title": "Elias M. Stein, Rami Shakarchi - Fourier Analysis  An Introduction",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Elias M. Stein, Rami Shakarchi - Fourier Analysis_ An Introduction.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Elias M. Stein, Rami Shakarchi - Fourier Analysis_ An Introduction.jpg"
+  },
+  {
+    "title": "Loukas Grafakos - Modern Fourier analysis",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Loukas Grafakos - Modern Fourier analysis.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Loukas Grafakos - Modern Fourier analysis.jpg"
+  },
+  {
+    "title": "Stein, Elias M.  Shakarchi, Rami - Functional Analysis  Introduction to Further Topics in Analysis",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Stein, Elias M. _Shakarchi, Rami - Functional Analysis_ Introduction to Further Topics in Analysis.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Stein, Elias M. _Shakarchi, Rami - Functional Analysis_ Introduction to Further Topics in Analysis.jpg"
+  },
+  {
+    "title": "Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43  Real-Variable Methods, Orthogonality, and Oscillatory Integrals",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals.jpg"
+  },
+  {
+    "title": "Stein, Elias M.  Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Stein, Elias M. _Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Stein, Elias M. _Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces.jpg"
+  },
+  {
+    "title": "Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis",
+    "category": "Fourier-Harmonic Analysis",
+    "pdfPath": "Books/Fourier-Harmonic Analysis/Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis.pdf",
+    "thumbPath": "thumbnails/Fourier-Harmonic Analysis-Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis.jpg"
+  },
+  {
+    "title": "Walter Rudin - Functional analysis",
+    "category": "Functional Analysis",
+    "pdfPath": "Books/Functional Analysis/Walter Rudin - Functional analysis.pdf",
+    "thumbPath": "thumbnails/Functional Analysis-Walter Rudin - Functional analysis.jpg"
+  },
+  {
+    "title": "humph-solns",
+    "category": "Lie Algebra",
+    "pdfPath": "Books/Lie Algebra/humph-solns.pdf",
+    "thumbPath": "thumbnails/Lie Algebra-humph-solns.jpg"
+  },
+  {
+    "title": "humphreys",
+    "category": "Lie Algebra",
+    "pdfPath": "Books/Lie Algebra/humphreys.pdf",
+    "thumbPath": "thumbnails/Lie Algebra-humphreys.jpg"
+  },
+  {
+    "title": "Topology",
+    "category": "Topology",
+    "pdfPath": "Books/Topology/Topology.pdf",
+    "thumbPath": "thumbnails/Topology-Topology.jpg"
+  },
+  {
+    "title": "Stein, Elias M.  Shakarchi, Rami - Real Analysis  Measure Theory, Integration, and Hilbert Spaces",
+    "category": "Real Analysis",
+    "pdfPath": "Books/Real Analysis/Stein, Elias M. _Shakarchi, Rami - Real Analysis_ Measure Theory, Integration, and Hilbert Spaces.pdf",
+    "thumbPath": "thumbnails/Real Analysis-Stein, Elias M. _Shakarchi, Rami - Real Analysis_ Measure Theory, Integration, and Hilbert Spaces.jpg"
+  },
+  {
+    "title": "Gerald B. Folland - Real Analysis  Modern Techniques and Their Applications",
+    "category": "Real Analysis",
+    "pdfPath": "Books/Real Analysis/Gerald B. Folland - Real Analysis_ Modern Techniques and Their Applications.pdf",
+    "thumbPath": "thumbnails/Real Analysis-Gerald B. Folland - Real Analysis_ Modern Techniques and Their Applications.jpg"
+  },
+  {
+    "title": "Introduction to Machine Learning with Python ( PDFDrive.com )-min",
+    "category": "Machine Learning",
+    "pdfPath": "Books/Machine Learning/Introduction to Machine Learning with Python ( PDFDrive.com )-min.pdf",
+    "thumbPath": "thumbnails/Machine Learning-Introduction to Machine Learning with Python ( PDFDrive.com )-min.jpg"
+  },
+  {
+    "title": "Elias M. Stein, Rami Shakarchi - Complex Analysis",
+    "category": "Complex Analysis",
+    "pdfPath": "Books/Complex Analysis/Elias M. Stein, Rami Shakarchi - Complex Analysis.pdf",
+    "thumbPath": "thumbnails/Complex Analysis-Elias M. Stein, Rami Shakarchi - Complex Analysis.jpg"
+  },
+  {
+    "title": "Representation of Heisenberg group",
+    "category": "Representation Theory",
+    "pdfPath": "Books/Representation Theory/Representation_of_Heisenberg_group.pdf",
+    "thumbPath": "thumbnails/Representation Theory-Representation_of_Heisenberg_group.jpg"
+  }
+]
