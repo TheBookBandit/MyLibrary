@@ -90,9 +90,17 @@ function renderBookCard(book, container) {
 
 // Open PDF in modal
 function openPDF(pdfPath) {
-    // GitHub Pages requires relative paths
-    const relativePath = pdfPath.replace(window.location.pathname, '');
-    pdfEmbed.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(relativePath)}`;
+    // Create URL relative to your site root
+    const basePath = window.location.pathname.includes('github.io')
+    ? window.location.pathname.split('/').slice(0, 3).join('/')
+    : '';
+
+    const fullPath = `${basePath}/${pdfPath}`;
+
+    // Use your local PDF.js viewer
+    const viewerURL = `pdfjs/viewer.html?file=${encodeURIComponent(fullPath)}`;
+
+    pdfEmbed.src = viewerURL;
     pdfModal.style.display = 'block';
 }
 
