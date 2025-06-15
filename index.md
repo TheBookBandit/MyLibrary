@@ -4,7 +4,7 @@ title: "My Digital Library"
 ---
 
 <nav>
-  <a href="/search.html">Search Books</a>
+  <a href="/search.md">Search Books</a>
 </nav>
 
 # 📚 My Digital Library
