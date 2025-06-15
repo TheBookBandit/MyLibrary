@@ -4,7 +4,7 @@ title: "My Digital Library"
 ---
 
 <nav>
-  <a href="/search.html">Search Books</a>
+  <a href="{{ '/search.html' | relative_url }}">Search Books</a>
 </nav>
 
 # 📚 My Digital Library

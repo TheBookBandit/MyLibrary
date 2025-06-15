@@ -1,2 +1,5 @@
 title: "MyLibrary"
 theme: minima
+baseurl: "/MyLibrary"
+# Optional but good practice:
+url: "https://sandipan04.github.io"
