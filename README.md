@@ -1,16 +1,8 @@
-# 📚 Math Library – by Sandipan Samanta
+# 📚 Math Library
 
 **A digital library of math textbooks** curated by a Mathematics Major at NISER Bhubaneswar.
 
 Explore a growing collection of PDFs organized by topic and available via GitHub Pages. Search and browse easily—no server required!
-
----
-
-## 🎓 About Me
-
-- **Name**: Sandipan Samanta
-- **Current**: Integrated MSc. Mathematics student at **NISER Bhubaneswar**
-- **Personal Site**: [sandipan04.github.io/webpage](https://sandipan04.github.io/webpage/)
 
 ---
 
@@ -26,7 +18,7 @@ Explore a growing collection of PDFs organized by topic and available via GitHub
 ## 🌍 Deployment
 
 This site is hosted using GitHub Pages under:
-[My Digital Library](https://sandipan04.github.io/MyLibrary/)
+[My Digital Library](https://thebookbandit.github.io/MyLibrary/)
 Push any updates to main and GitHub will automatically rebuild and redeploy the site.
 
 ## 📄 License
