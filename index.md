@@ -3,6 +3,10 @@ layout: default
 title: "My Digital Library"
 ---
 
+<nav>
+  <a href="/search.html">Search Books</a>
+</nav>
+
 # 📚 My Digital Library
 
 Explore by genre:
