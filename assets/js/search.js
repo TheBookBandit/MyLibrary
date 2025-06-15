@@ -29,4 +29,7 @@
   } else {
     container.innerHTML = '<li>No results found.</li>';
   }
+  console.log('query:', query);
+  console.log('window.store:', window.store);
+  console.log('results count:', results.length);
 })();
