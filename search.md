@@ -26,4 +26,4 @@ window.store = {
 </script>
 
 <script src="https://unpkg.com/lunr/lunr.js"></script>
-<script src="/assets/js/search.js"></script>
+<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
