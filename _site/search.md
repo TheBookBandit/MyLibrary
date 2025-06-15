@@ -7,14 +7,14 @@
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Search" />
 <meta property="og:locale" content="en_US" />
-<link rel="canonical" href="http://localhost:4000/search.html" />
-<meta property="og:url" content="http://localhost:4000/search.html" />
+<link rel="canonical" href="http://localhost:4000/search.md" />
+<meta property="og:url" content="http://localhost:4000/search.md" />
 <meta property="og:site_name" content="MyLibrary" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Search" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","headline":"Search","url":"http://localhost:4000/search.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","headline":"Search","url":"http://localhost:4000/search.md"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyLibrary" /></head>
 <body><header class="site-header" role="banner">
@@ -29,12 +29,12 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/debug.html">Debug Static Files</a><a class="page-link" href="/">My Digital Library</a><a class="page-link" href="/search.html">Search</a></div>
+        <div class="trigger"><a class="page-link" href="/debug.html">Debug Static Files</a><a class="page-link" href="/">My Digital Library</a><a class="page-link" href="/search.md">Search</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <form action="/search.html" method="get" class="search-form">
+        <form action="/search.md" method="get" class="search-form">
   <input type="text" name="query" placeholder="Search books..." />
   <button type="submit">Search</button>
 </form>
