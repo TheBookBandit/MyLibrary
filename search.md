@@ -4,7 +4,7 @@ title: Search
 permalink: /search.html
 ---
 
-<form action="/search.html" method="get" class="search-form">
+<form action="{{ '/search.html' | relative_url }}" method="get" class="search-form">
   <input type="text" name="query" placeholder="Search books..." />
   <button type="submit">Search</button>
 </form>
