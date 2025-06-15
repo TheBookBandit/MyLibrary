@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Search
-permalink: /search.md
+permalink: /search.html
 ---
 
-<form action="/search.md" method="get" class="search-form">
+<form action="/search.html" method="get" class="search-form">
   <input type="text" name="query" placeholder="Search books..." />
   <button type="submit">Search</button>
 </form>
