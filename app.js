@@ -44,8 +44,8 @@ const LIBRARY_CONFIGS = {
     name: 'Library Lite'
   },
   full: {
-    manifestUrl: `http://192.168.1.100:8080/books.json`, // CHANGE TO YOUR PI'S IP
-    baseUrl: 'http://192.168.1.100:8080/',
+    manifestUrl: `http://10.25.136.207:8080/books.json`, // CHANGE TO YOUR PI'S IP
+    baseUrl: 'http://10.25.136.207:8080/',
     name: 'Library Full'
   }
 };
