@@ -28,7 +28,7 @@ let userProfile = null;
 let isAdmin = false;
 
 // Default admin email - Change this to your email
-const ADMIN_EMAIL = 'sandipan7085@gmail.com'; // CHANGE THIS
+const ADMIN_EMAIL = 'sandipansamanta2004@gmail.com'; // CHANGE THIS
 
 // Raspberry Pi server configuration
 const PI_SERVER_CONFIG = {
