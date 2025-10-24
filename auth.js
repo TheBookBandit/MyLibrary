@@ -116,7 +116,7 @@ async function handleRegister(name, username, email, password, confirmPassword) 
     try {
         showLoading(true, 'Creating account...');
         
-        // Check if username already exists
+        console.log('Step 1: Checking username availability...');
         const usernameQuery = query(
             collection(window.firebaseDb, 'users'), 
             where('username', '==', username)
@@ -129,14 +129,15 @@ async function handleRegister(name, username, email, password, confirmPassword) 
             return;
         }
         
-        // Create Firebase user
+        console.log('Step 2: Creating Firebase Auth user...');
         const userCredential = await createUserWithEmailAndPassword(window.firebaseAuth, email, password);
         const user = userCredential.user;
+        console.log('User created with UID:', user.uid);
         
-        // Update display name
+        console.log('Step 3: Updating display name...');
         await updateProfile(user, { displayName: name });
         
-        // Create user profile in Firestore
+        console.log('Step 4: Creating Firestore profile document...');
         await setDoc(doc(window.firebaseDb, 'users', user.uid), {
             name: name,
             username: username,
@@ -146,8 +147,9 @@ async function handleRegister(name, username, email, password, confirmPassword) 
             createdAt: new Date(),
             updatedAt: new Date()
         });
+        console.log('Firestore profile created successfully');
         
-        // Send admin notification if not self-registration by admin
+        console.log('Step 5: Creating notification...');
         if (email !== ADMIN_EMAIL) {
             try {
                 await addDoc(collection(window.firebaseDb, 'notifications'), {
@@ -159,6 +161,7 @@ async function handleRegister(name, username, email, password, confirmPassword) 
                     read: false,
                     createdAt: new Date()
                 });
+                console.log('Notification created');
             } catch (notifError) {
                 console.log('Notification creation failed (non-critical):', notifError);
             }
@@ -168,6 +171,9 @@ async function handleRegister(name, username, email, password, confirmPassword) 
         showSuccess('Registration successful! ' + (email === ADMIN_EMAIL ? 'Admin account created.' : 'Please wait for admin approval.'));
         
     } catch (error) {
+        console.error('Registration error at:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
         showLoading(false);
         showError(getErrorMessage(error));
     }
