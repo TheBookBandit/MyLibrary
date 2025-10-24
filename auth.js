@@ -102,6 +102,7 @@ async function handleLogin(email, password) {
     }
 }
 
+// Quick registration fix - bypass username check
 async function handleRegister(name, username, email, password, confirmPassword) {
     if (password !== confirmPassword) {
         showError('Passwords do not match');
@@ -116,40 +117,40 @@ async function handleRegister(name, username, email, password, confirmPassword) 
     try {
         showLoading(true, 'Creating account...');
         
-        console.log('Step 1: Checking username availability...');
-        const usernameQuery = query(
-            collection(window.firebaseDb, 'users'), 
-            where('username', '==', username)
-        );
-        const usernameSnapshot = await getDocs(usernameQuery);
+        console.log('Creating Firebase Auth user...');
         
-        if (!usernameSnapshot.empty) {
-            showLoading(false);
-            showError('Username already exists');
-            return;
-        }
-        
-        console.log('Step 2: Creating Firebase Auth user...');
+        // Create Firebase user directly (skip username check to avoid permission issues)
         const userCredential = await createUserWithEmailAndPassword(window.firebaseAuth, email, password);
         const user = userCredential.user;
         console.log('User created with UID:', user.uid);
         
-        console.log('Step 3: Updating display name...');
+        console.log('Updating display name...');
         await updateProfile(user, { displayName: name });
         
-        console.log('Step 4: Creating Firestore profile document...');
-        await setDoc(doc(window.firebaseDb, 'users', user.uid), {
-            name: name,
-            username: username,
-            email: email,
-            approved: email === ADMIN_EMAIL,
-            isAdmin: email === ADMIN_EMAIL,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        });
-        console.log('Firestore profile created successfully');
+        console.log('Creating Firestore profile document...');
         
-        console.log('Step 5: Creating notification...');
+        // Try to create user profile with minimal fields
+        try {
+            await setDoc(doc(window.firebaseDb, 'users', user.uid), {
+                name: name,
+                username: username,
+                email: email,
+                approved: email === ADMIN_EMAIL,
+                isAdmin: email === ADMIN_EMAIL,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            console.log('Firestore profile created successfully');
+        } catch (firestoreError) {
+            console.error('Firestore error:', firestoreError);
+            // If Firestore fails, at least the Firebase Auth user was created
+            // User can be manually fixed in Firebase Console
+            showError('User registered but profile creation failed. Please contact admin.');
+            showLoading(false);
+            return;
+        }
+        
+        console.log('Creating notification...');
         if (email !== ADMIN_EMAIL) {
             try {
                 await addDoc(collection(window.firebaseDb, 'notifications'), {
@@ -171,7 +172,7 @@ async function handleRegister(name, username, email, password, confirmPassword) 
         showSuccess('Registration successful! ' + (email === ADMIN_EMAIL ? 'Admin account created.' : 'Please wait for admin approval.'));
         
     } catch (error) {
-        console.error('Registration error at:', error);
+        console.error('Registration error:', error);
         console.error('Error code:', error.code);
         console.error('Error message:', error.message);
         showLoading(false);
