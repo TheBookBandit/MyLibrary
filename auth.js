@@ -1,4 +1,4 @@
-// auth.js - Firebase Authentication Module
+// auth.js - Fixed Firebase Authentication Module
 import { 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
@@ -16,8 +16,7 @@ import {
     getDocs, 
     updateDoc, 
     query, 
-    where, 
-    orderBy,
+    where,
     deleteDoc,
     addDoc
 } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
@@ -28,44 +27,33 @@ let userProfile = null;
 let isAdmin = false;
 
 // Default admin email - Change this to your email
-const ADMIN_EMAIL = 'sandipansamanta2004@gmail.com'; // CHANGE THIS
+const ADMIN_EMAIL = 'admin@yourdomain.com'; // CHANGE THIS
 
 // Raspberry Pi server configuration
 const PI_SERVER_CONFIG = {
-    host: '10.25.136.207', // CHANGE TO YOUR PI'S IP
+    host: '192.168.1.100', // CHANGE TO YOUR PI'S IP
     port: 8080,
     protocol: 'http'
 };
 
 // UI Elements
 const elements = {
-    // Pages
     authPage: document.getElementById('authPage'),
     librarySelection: document.getElementById('librarySelection'),
     lanDenied: document.getElementById('lanDenied'),
     libraryApp: document.getElementById('libraryApp'),
-    
-    // Auth forms
     loginForm: document.getElementById('loginForm'),
     registerForm: document.getElementById('registerForm'),
     forgotPasswordForm: document.getElementById('forgotPasswordForm'),
     pendingApproval: document.getElementById('pendingApproval'),
     loadingAuth: document.getElementById('loadingAuth'),
-    
-    // Form elements
     loginFormElement: document.getElementById('loginFormElement'),
     registerFormElement: document.getElementById('registerFormElement'),
     forgotPasswordFormElement: document.getElementById('forgotPasswordFormElement'),
-    
-    // User info
     userName: document.getElementById('userName'),
     libraryMode: document.getElementById('libraryMode'),
-    
-    // Modals
     profileModal: document.getElementById('profileModal'),
     adminModal: document.getElementById('adminModal'),
-    
-    // Admin panel
     pendingUsersList: document.getElementById('pendingUsersList'),
     approvedUsersList: document.getElementById('approvedUsersList')
 };
@@ -74,21 +62,24 @@ const elements = {
 function showPage(pageId) {
     const pages = ['authPage', 'librarySelection', 'lanDenied', 'libraryApp'];
     pages.forEach(page => {
-        document.getElementById(page).style.display = page === pageId ? 'block' : 'none';
+        const el = document.getElementById(page);
+        if (el) el.style.display = page === pageId ? 'block' : 'none';
     });
 }
 
 function showAuthForm(formName) {
     const forms = ['loginForm', 'registerForm', 'forgotPasswordForm', 'pendingApproval'];
     forms.forEach(form => {
-        document.getElementById(form).style.display = form === formName ? 'block' : 'none';
+        const el = document.getElementById(form);
+        if (el) el.style.display = form === formName ? 'block' : 'none';
     });
 }
 
 function showLoading(show, message = 'Please wait...') {
-    elements.loadingAuth.style.display = show ? 'block' : 'none';
-    if (show) {
-        elements.loadingAuth.querySelector('p').textContent = message;
+    if (elements.loadingAuth) {
+        elements.loadingAuth.style.display = show ? 'block' : 'none';
+        const loadingText = elements.loadingAuth.querySelector('p');
+        if (show && loadingText) loadingText.textContent = message;
     }
 }
 
@@ -104,8 +95,7 @@ function showSuccess(message) {
 async function handleLogin(email, password) {
     try {
         showLoading(true, 'Signing in...');
-        const userCredential = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
-        // User state will be handled by onAuthStateChanged
+        await signInWithEmailAndPassword(window.firebaseAuth, email, password);
     } catch (error) {
         showLoading(false);
         showError(getErrorMessage(error));
@@ -151,7 +141,7 @@ async function handleRegister(name, username, email, password, confirmPassword) 
             name: name,
             username: username,
             email: email,
-            approved: false,
+            approved: email === ADMIN_EMAIL,
             isAdmin: email === ADMIN_EMAIL,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -159,15 +149,19 @@ async function handleRegister(name, username, email, password, confirmPassword) 
         
         // Send admin notification if not self-registration by admin
         if (email !== ADMIN_EMAIL) {
-            await addDoc(collection(window.firebaseDb, 'notifications'), {
-                type: 'new_user_registration',
-                userId: user.uid,
-                userName: name,
-                userEmail: email,
-                message: `New user ${name} (${email}) has registered and is awaiting approval.`,
-                read: false,
-                createdAt: new Date()
-            });
+            try {
+                await addDoc(collection(window.firebaseDb, 'notifications'), {
+                    type: 'new_user_registration',
+                    userId: user.uid,
+                    userName: name,
+                    userEmail: email,
+                    message: `New user ${name} (${email}) has registered and is awaiting approval.`,
+                    read: false,
+                    createdAt: new Date()
+                });
+            } catch (notifError) {
+                console.log('Notification creation failed (non-critical):', notifError);
+            }
         }
         
         showLoading(false);
@@ -211,7 +205,9 @@ async function loadUserProfile(user) {
             isAdmin = userProfile.isAdmin || false;
             
             // Update UI
-            elements.userName.textContent = userProfile.name || user.displayName || 'User';
+            if (elements.userName) {
+                elements.userName.textContent = userProfile.name || user.displayName || 'User';
+            }
             
             // Show admin panel if admin
             const adminBtn = document.getElementById('adminPanelBtn');
@@ -260,7 +256,9 @@ async function updateUserProfile(name, username) {
         userProfile.username = username;
         
         // Update UI
-        elements.userName.textContent = name;
+        if (elements.userName) {
+            elements.userName.textContent = name;
+        }
         
         showSuccess('Profile updated successfully');
     } catch (error) {
@@ -268,52 +266,102 @@ async function updateUserProfile(name, username) {
     }
 }
 
-// Admin Functions
+// Admin Functions - FIXED to avoid index requirements
 async function loadPendingUsers() {
     try {
+        // Simplified query without orderBy to avoid index requirement
         const pendingQuery = query(
             collection(window.firebaseDb, 'users'),
-            where('approved', '==', false),
-            where('isAdmin', '==', false),
-            orderBy('createdAt', 'desc')
+            where('approved', '==', false)
         );
         const snapshot = await getDocs(pendingQuery);
         
-        elements.pendingUsersList.innerHTML = '';
-        
-        if (snapshot.empty) {
-            elements.pendingUsersList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No pending users</p>';
-            return;
+        if (elements.pendingUsersList) {
+            elements.pendingUsersList.innerHTML = '';
+            
+            if (snapshot.empty) {
+                elements.pendingUsersList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No pending users</p>';
+                return;
+            }
+            
+            // Collect and sort manually
+            const users = [];
+            snapshot.forEach(doc => {
+                const user = doc.data();
+                // Filter out admin users
+                if (!user.isAdmin) {
+                    users.push({ id: doc.id, data: user });
+                }
+            });
+            
+            // Sort by createdAt descending (newest first)
+            users.sort((a, b) => {
+                const aTime = a.data.createdAt?.toMillis ? a.data.createdAt.toMillis() : 0;
+                const bTime = b.data.createdAt?.toMillis ? b.data.createdAt.toMillis() : 0;
+                return bTime - aTime;
+            });
+            
+            if (users.length === 0) {
+                elements.pendingUsersList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No pending users</p>';
+                return;
+            }
+            
+            users.forEach(({ id, data }) => {
+                const userCard = createUserCard(id, data, true);
+                elements.pendingUsersList.appendChild(userCard);
+            });
         }
-        
-        snapshot.forEach(doc => {
-            const user = doc.data();
-            const userCard = createUserCard(doc.id, user, true);
-            elements.pendingUsersList.appendChild(userCard);
-        });
     } catch (error) {
-        showError('Failed to load pending users');
+        console.error('Error loading pending users:', error);
+        if (elements.pendingUsersList) {
+            elements.pendingUsersList.innerHTML = '<p style="text-align: center; color: var(--danger-color); padding: 2rem;">Error loading pending users</p>';
+        }
+        showError('Failed to load pending users: ' + error.message);
     }
 }
 
 async function loadApprovedUsers() {
     try {
+        // Simplified query without orderBy to avoid index requirement
         const approvedQuery = query(
             collection(window.firebaseDb, 'users'),
-            where('approved', '==', true),
-            orderBy('createdAt', 'desc')
+            where('approved', '==', true)
         );
         const snapshot = await getDocs(approvedQuery);
         
-        elements.approvedUsersList.innerHTML = '';
-        
-        snapshot.forEach(doc => {
-            const user = doc.data();
-            const userCard = createUserCard(doc.id, user, false);
-            elements.approvedUsersList.appendChild(userCard);
-        });
+        if (elements.approvedUsersList) {
+            elements.approvedUsersList.innerHTML = '';
+            
+            // Collect and sort manually
+            const users = [];
+            snapshot.forEach(doc => {
+                const user = doc.data();
+                users.push({ id: doc.id, data: user });
+            });
+            
+            // Sort by createdAt descending (newest first)
+            users.sort((a, b) => {
+                const aTime = a.data.createdAt?.toMillis ? a.data.createdAt.toMillis() : 0;
+                const bTime = b.data.createdAt?.toMillis ? b.data.createdAt.toMillis() : 0;
+                return bTime - aTime;
+            });
+            
+            if (users.length === 0) {
+                elements.approvedUsersList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No approved users yet</p>';
+                return;
+            }
+            
+            users.forEach(({ id, data }) => {
+                const userCard = createUserCard(id, data, false);
+                elements.approvedUsersList.appendChild(userCard);
+            });
+        }
     } catch (error) {
-        showError('Failed to load approved users');
+        console.error('Error loading approved users:', error);
+        if (elements.approvedUsersList) {
+            elements.approvedUsersList.innerHTML = '<p style="text-align: center; color: var(--danger-color); padding: 2rem;">Error loading approved users</p>';
+        }
+        showError('Failed to load approved users: ' + error.message);
     }
 }
 
@@ -323,10 +371,13 @@ function createUserCard(userId, user, isPending) {
     
     const userInfo = document.createElement('div');
     userInfo.className = 'user-info';
+    
+    const createdDate = user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString() : 'Unknown';
+    
     userInfo.innerHTML = `
-        <h4>${user.name} (@${user.username})</h4>
-        <p>${user.email}</p>
-        <p>Registered: ${user.createdAt?.toDate?.()?.toLocaleDateString() || 'Unknown'}</p>
+        <h4>${user.name || 'No Name'} (@${user.username || 'no-username'})</h4>
+        <p>${user.email || 'No email'}</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Registered: ${createdDate}</p>
     `;
     
     const actions = document.createElement('div');
@@ -371,7 +422,7 @@ async function approveUser(userId, user) {
         loadPendingUsers();
         loadApprovedUsers();
     } catch (error) {
-        showError('Failed to approve user');
+        showError('Failed to approve user: ' + error.message);
     }
 }
 
@@ -385,7 +436,7 @@ async function rejectUser(userId, user) {
         showSuccess(`User ${user.name} rejected and account deleted`);
         loadPendingUsers();
     } catch (error) {
-        showError('Failed to reject user');
+        showError('Failed to reject user: ' + error.message);
     }
 }
 
@@ -404,17 +455,22 @@ async function revokeUser(userId, user) {
         loadPendingUsers();
         loadApprovedUsers();
     } catch (error) {
-        showError('Failed to revoke user access');
+        showError('Failed to revoke user access: ' + error.message);
     }
 }
 
 // Library Access Functions
 async function checkLANAccess() {
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
         const response = await fetch(`${PI_SERVER_CONFIG.protocol}://${PI_SERVER_CONFIG.host}:${PI_SERVER_CONFIG.port}/health`, {
             method: 'GET',
-            timeout: 3000
+            signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
         return response.ok;
     } catch (error) {
         return false;
@@ -428,18 +484,15 @@ async function enterLibrary(mode) {
             showPage('lanDenied');
             return;
         }
-        // Set library mode for full access
         window.libraryMode = 'full';
-        elements.libraryMode.textContent = 'Library Full';
+        if (elements.libraryMode) elements.libraryMode.textContent = 'Library Full';
     } else {
-        // Set library mode for lite access
         window.libraryMode = 'lite';
-        elements.libraryMode.textContent = 'Library Lite';
+        if (elements.libraryMode) elements.libraryMode.textContent = 'Library Lite';
     }
     
     showPage('libraryApp');
     
-    // Initialize the main library app
     if (window.initializeLibraryApp) {
         window.initializeLibraryApp();
     }
@@ -468,122 +521,168 @@ function getErrorMessage(error) {
 // Event Listeners
 function bindAuthEvents() {
     // Form navigation
-    document.getElementById('showRegister')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('registerForm');
-    });
+    const showRegisterBtn = document.getElementById('showRegister');
+    if (showRegisterBtn) {
+        showRegisterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForm('registerForm');
+        });
+    }
     
-    document.getElementById('showLogin')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('loginForm');
-    });
+    const showLoginBtn = document.getElementById('showLogin');
+    if (showLoginBtn) {
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForm('loginForm');
+        });
+    }
     
-    document.getElementById('showForgotPassword')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('forgotPasswordForm');
-    });
+    const showForgotPasswordBtn = document.getElementById('showForgotPassword');
+    if (showForgotPasswordBtn) {
+        showForgotPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForm('forgotPasswordForm');
+        });
+    }
     
-    document.getElementById('backToLogin')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('loginForm');
-    });
+    const backToLoginBtn = document.getElementById('backToLogin');
+    if (backToLoginBtn) {
+        backToLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForm('loginForm');
+        });
+    }
     
     // Form submissions
-    elements.loginFormElement?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        handleLogin(email, password);
-    });
+    if (elements.loginFormElement) {
+        elements.loginFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            handleLogin(email, password);
+        });
+    }
     
-    elements.registerFormElement?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('regName').value;
-        const username = document.getElementById('regUsername').value;
-        const email = document.getElementById('regEmail').value;
-        const password = document.getElementById('regPassword').value;
-        const confirmPassword = document.getElementById('regConfirmPassword').value;
-        handleRegister(name, username, email, password, confirmPassword);
-    });
+    if (elements.registerFormElement) {
+        elements.registerFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            handleRegister(name, username, email, password, confirmPassword);
+        });
+    }
     
-    elements.forgotPasswordFormElement?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('resetEmail').value;
-        handleForgotPassword(email);
-    });
+    if (elements.forgotPasswordFormElement) {
+        elements.forgotPasswordFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            handleForgotPassword(email);
+        });
+    }
     
     // Library selection
-    document.getElementById('libraryLite')?.addEventListener('click', () => {
-        enterLibrary('lite');
-    });
+    const libraryLite = document.getElementById('libraryLite');
+    if (libraryLite) {
+        libraryLite.addEventListener('click', () => enterLibrary('lite'));
+    }
     
-    document.getElementById('libraryFull')?.addEventListener('click', () => {
-        enterLibrary('full');
-    });
+    const libraryFull = document.getElementById('libraryFull');
+    if (libraryFull) {
+        libraryFull.addEventListener('click', () => enterLibrary('full'));
+    }
     
     // Navigation buttons
-    document.getElementById('signOutBtn')?.addEventListener('click', handleSignOut);
-    document.getElementById('logoutBtn')?.addEventListener('click', handleSignOut);
-    document.getElementById('switchLibraryBtn')?.addEventListener('click', () => {
-        showPage('librarySelection');
-    });
+    const signOutBtn = document.getElementById('signOutBtn');
+    if (signOutBtn) signOutBtn.addEventListener('click', handleSignOut);
+    
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', handleSignOut);
+    
+    const switchLibraryBtn = document.getElementById('switchLibraryBtn');
+    if (switchLibraryBtn) {
+        switchLibraryBtn.addEventListener('click', () => showPage('librarySelection'));
+    }
     
     // LAN denied page
-    document.getElementById('backToSelectionBtn')?.addEventListener('click', () => {
-        showPage('librarySelection');
-    });
+    const backToSelectionBtn = document.getElementById('backToSelectionBtn');
+    if (backToSelectionBtn) {
+        backToSelectionBtn.addEventListener('click', () => showPage('librarySelection'));
+    }
     
-    document.getElementById('tryLibraryLiteBtn')?.addEventListener('click', () => {
-        enterLibrary('lite');
-    });
+    const tryLibraryLiteBtn = document.getElementById('tryLibraryLiteBtn');
+    if (tryLibraryLiteBtn) {
+        tryLibraryLiteBtn.addEventListener('click', () => enterLibrary('lite'));
+    }
     
     // Profile modal
-    document.getElementById('editProfileBtn')?.addEventListener('click', () => {
-        document.getElementById('profileName').value = userProfile?.name || '';
-        document.getElementById('profileUsername').value = userProfile?.username || '';
-        document.getElementById('profileEmail').value = currentUser?.email || '';
-        elements.profileModal.style.display = 'flex';
-    });
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    if (editProfileBtn) {
+        editProfileBtn.addEventListener('click', () => {
+            document.getElementById('profileName').value = userProfile?.name || '';
+            document.getElementById('profileUsername').value = userProfile?.username || '';
+            document.getElementById('profileEmail').value = currentUser?.email || '';
+            if (elements.profileModal) elements.profileModal.style.display = 'flex';
+        });
+    }
     
-    document.getElementById('closeProfileModalBtn')?.addEventListener('click', () => {
-        elements.profileModal.style.display = 'none';
-    });
+    const closeProfileModalBtn = document.getElementById('closeProfileModalBtn');
+    if (closeProfileModalBtn) {
+        closeProfileModalBtn.addEventListener('click', () => {
+            if (elements.profileModal) elements.profileModal.style.display = 'none';
+        });
+    }
     
-    document.getElementById('cancelProfileBtn')?.addEventListener('click', () => {
-        elements.profileModal.style.display = 'none';
-    });
+    const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+    if (cancelProfileBtn) {
+        cancelProfileBtn.addEventListener('click', () => {
+            if (elements.profileModal) elements.profileModal.style.display = 'none';
+        });
+    }
     
-    document.getElementById('profileForm')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('profileName').value;
-        const username = document.getElementById('profileUsername').value;
-        await updateUserProfile(name, username);
-        elements.profileModal.style.display = 'none';
-    });
+    const profileForm = document.getElementById('profileForm');
+    if (profileForm) {
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('profileName').value;
+            const username = document.getElementById('profileUsername').value;
+            await updateUserProfile(name, username);
+            if (elements.profileModal) elements.profileModal.style.display = 'none';
+        });
+    }
     
     // Admin panel
-    document.getElementById('adminPanelBtn')?.addEventListener('click', () => {
-        elements.adminModal.style.display = 'flex';
-        loadPendingUsers();
-        loadApprovedUsers();
-    });
+    const adminPanelBtn = document.getElementById('adminPanelBtn');
+    if (adminPanelBtn) {
+        adminPanelBtn.addEventListener('click', () => {
+            if (elements.adminModal) elements.adminModal.style.display = 'flex';
+            loadPendingUsers();
+            loadApprovedUsers();
+        });
+    }
     
-    document.getElementById('closeAdminModalBtn')?.addEventListener('click', () => {
-        elements.adminModal.style.display = 'none';
-    });
+    const closeAdminModalBtn = document.getElementById('closeAdminModalBtn');
+    if (closeAdminModalBtn) {
+        closeAdminModalBtn.addEventListener('click', () => {
+            if (elements.adminModal) elements.adminModal.style.display = 'none';
+        });
+    }
     
     // Admin tabs
     document.querySelectorAll('.admin-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             const tabName = tab.dataset.tab;
             
-            // Update active tab
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             
-            // Show corresponding content
-            document.getElementById('pendingUsersTab').style.display = tabName === 'pending' ? 'block' : 'none';
-            document.getElementById('approvedUsersTab').style.display = tabName === 'approved' ? 'block' : 'none';
+            const pendingTab = document.getElementById('pendingUsersTab');
+            const approvedTab = document.getElementById('approvedUsersTab');
+            
+            if (pendingTab) pendingTab.style.display = tabName === 'pending' ? 'block' : 'none';
+            if (approvedTab) approvedTab.style.display = tabName === 'approved' ? 'block' : 'none';
         });
     });
     
@@ -601,7 +700,6 @@ function bindAuthEvents() {
 async function initAuth() {
     bindAuthEvents();
     
-    // Listen for auth state changes
     onAuthStateChanged(window.firebaseAuth, async (user) => {
         if (user) {
             currentUser = user;
@@ -621,7 +719,6 @@ async function initAuth() {
                 return;
             }
             
-            // User is approved, show library selection
             showPage('librarySelection');
             
         } else {
@@ -634,7 +731,7 @@ async function initAuth() {
     });
 }
 
-// Export functions for use in other modules
+// Export functions
 window.authModule = {
     initAuth,
     currentUser: () => currentUser,
@@ -644,7 +741,7 @@ window.authModule = {
     enterLibrary
 };
 
-// Initialize when DOM is ready
+// Initialize
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAuth);
 } else {
