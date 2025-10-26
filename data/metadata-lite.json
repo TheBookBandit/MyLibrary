@@ -1,343 +1,408 @@
-[
-  {
-    "id": "1",
-    "title": "Introduction to Machine Learning with Python",
-    "author": "Andreas C. Müller and Sarah Guido",
-    "field": "Machine Learning",
-    "tags": [],
-    "description": "",
-    "path": "Machine Learning/Introduction to Machine Learning with Python.pdf",
-    "sizeBytes": 7056256,
-    "addedAt": 1760479151672,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "2",
-    "title": "Principles of Mathematical Analysis, Third Ed",
-    "author": "Rudin, Walter",
-    "field": "Real Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Real Analysis/Rudin, Walter - Principles of Mathematical Analysis, Third Ed.pdf",
-    "sizeBytes": 4959823,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "3",
-    "title": "Real Analysis: Measure Theory, Integration, and Hilbert Spaces",
-    "author": "Elias M. Stein, Rami Shakarchi",
-    "field": "Real Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Real Analysis/Stein, Elias M. _Shakarchi, Rami - Real Analysis_ Measure Theory, Integration, and Hilbert Spaces.pdf",
-    "sizeBytes": 3111979,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+manual"
-  },
-  {
-    "id": "4",
-    "title": "Principles of Mathematical Analysis",
-    "author": "Walter Rudin",
-    "field": "Real Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Real Analysis/Walter Rudin - Principles of Mathematical Analysis.pdf",
-    "sizeBytes": 32330838,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "5",
-    "title": "Real & Complex Analysis",
-    "author": "Walter Rudin",
-    "field": "Real Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Real Analysis/Walter Rudin - Real & Complex Analysis.pdf",
-    "sizeBytes": 6416808,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "6",
-    "title": "Real Analysis: Modern Techniques and Their Applications",
-    "author": "Gerald B. Folland",
-    "field": "Real Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Real Analysis/Gerald B. Folland - Real Analysis_ Modern Techniques and Their Applications.pdf",
-    "sizeBytes": 8330607,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "7",
-    "title": "Representation of Heisenberg group",
-    "author": "Sandipan Samanta",
-    "field": "Representation Theory",
-    "tags": [],
-    "description": "",
-    "path": "Representation Theory/Representation_of_Heisenberg_group.pdf",
-    "sizeBytes": 166947,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta+manual"
-  },
-  {
-    "id": "8",
-    "title": "Rudin (1991) Functional Analysis.djvu",
-    "author": "Daniel",
-    "field": "Functional Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Functional Analysis/Walter Rudin - Functional analysis.pdf",
-    "sizeBytes": 5284501,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "9",
-    "title": "Modern Fourier analysis",
-    "author": "Loukas Grafakos",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Loukas Grafakos - Modern Fourier analysis.pdf",
-    "sizeBytes": 7264134,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "10",
-    "title": "Functional Analysis_ Introduction to Further Topics in Analysis",
-    "author": "Stein, Elias M. _Shakarchi, Rami",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Stein, Elias M. _Shakarchi, Rami - Functional Analysis_ Introduction to Further Topics in Analysis.pdf",
-    "sizeBytes": 3417107,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename+pdfmeta"
-  },
-  {
-    "id": "11",
-    "title": "Introduction to Fourier Analysis on Euclidean Spaces",
-    "author": "Stein, Elias M. _Weiss, Guido",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Stein, Elias M. _Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces.pdf",
-    "sizeBytes": 12208178,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "12",
-    "title": "Fourier Analysis: An Introduction",
-    "author": "Elias M. Stein, Rami Shakarchi",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Elias M. Stein, Rami Shakarchi - Fourier Analysis_ An Introduction.pdf",
-    "sizeBytes": 2412137,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "13",
-    "title": "Beijing Lectures in Harmonic Analysis",
-    "author": "Stein, Elias M. (editor)",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Stein, Elias M. (editor) - Beijing Lectures in Harmonic Analysis.pdf",
-    "sizeBytes": 20998042,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "14",
-    "title": "Fourier Transform of Surface carried Measures",
-    "author": "Walter Littman",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Walter Littman - Fourier Transform of Surface carried Measures.pdf",
-    "sizeBytes": 346423,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "15",
-    "title": "A note on spherical summation multipliers",
-    "author": "Charles Fefferman",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Charles Fefferman - A note on spherical summation multipliers.pdf",
-    "sizeBytes": 368453,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "16",
-    "title": "Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals",
-    "author": "Stein, Elias M.",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals.pdf",
-    "sizeBytes": 23803678,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "17",
-    "title": "On the Existence of Certain Singular Integrals",
-    "author": "A. P. Calderon, A. Zygmund",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/A. P. Calderon, A. Zygmund - On the Existence of Certain Singular Integrals.pdf",
-    "sizeBytes": 2114113,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "18",
-    "title": "BF02772215 (1)",
-    "author": "",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/BF02772215 (1).pdf",
-    "sizeBytes": 709372,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "19",
-    "title": "Principle Curvature and Harmonic Analysis",
-    "author": "Allan Greenleaf",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Allan Greenleaf - Principle Curvature and Harmonic Analysis.pdf",
-    "sizeBytes": 1283227,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "20",
-    "title": "Fourier Analysis",
-    "author": "Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.)",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis.pdf",
-    "sizeBytes": 10262580,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "21",
-    "title": "Problems in harmonic analysis related to curvature",
-    "author": "Elias M. Stein, Stephen Wainger",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Elias M. Stein, Stephen Wainger - Problems in harmonic analysis related to curvature.pdf",
-    "sizeBytes": 4594942,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "22",
-    "title": "Bochner-Riesz Means on Euclidean Spaces",
-    "author": "Shanzhen Lu, Dunyan Yan",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Shanzhen Lu, Dunyan Yan - Bochner-Riesz Means on Euclidean Spaces.pdf",
-    "sizeBytes": 1872508,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "23",
-    "title": "Classical Fourier analysis",
-    "author": "Loukas Grafakos",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Loukas Grafakos - Classical Fourier analysis.pdf",
-    "sizeBytes": 6912034,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "24",
-    "title": "An Estimate for the Bochner-Riesz Operator on\nFunctions of Product Type in\n $R^{2}$",
-    "author": "Hitoshi Tanaka",
-    "field": "Fourier-Harmonic Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Fourier-Harmonic Analysis/Hitoshi Tanaka - An Estimate for the Bochner-Riesz Operator on\nFunctions of Product Type in\n $R^{2}$.pdf",
-    "sizeBytes": 726543,
-    "addedAt": 1760479151673,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "25",
-    "title": "Complex Analysis",
-    "author": "Elias M. Stein, Rami Shakarchi",
-    "field": "Complex Analysis",
-    "tags": [],
-    "description": "",
-    "path": "Complex Analysis/Elias M. Stein, Rami Shakarchi - Complex Analysis.pdf",
-    "sizeBytes": 3593019,
-    "addedAt": 1760479151674,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "26",
-    "title": "Introduction to Lie Algebras and Representation Theory",
-    "author": "James E. Humphreys",
-    "field": "Lie Algebra",
-    "tags": [
-      "algebra",
-      "abstract algebra",
-      "lie algebra",
-      "representation theory"
-    ],
-    "description": "",
-    "path": "Lie Algebra/humphreys.pdf",
-    "sizeBytes": 15167075,
-    "addedAt": 1760479151674,
-    "metadataSource": "filename+manual"
-  },
-  {
-    "id": "27",
-    "title": "humph-solns",
-    "author": "",
-    "field": "Lie Algebra",
-    "tags": [],
-    "description": "",
-    "path": "Lie Algebra/humph-solns.pdf",
-    "sizeBytes": 372132,
-    "addedAt": 1760479151674,
-    "metadataSource": "filename"
-  },
-  {
-    "id": "28",
-    "title": "Topology Notes",
-    "author": "Krishanu Dan",
-    "field": "Topology",
-    "tags": [],
-    "description": "",
-    "path": "Topology/Topology.pdf",
-    "sizeBytes": 3078797,
-    "addedAt": 1760479151674,
-    "metadataSource": "filename"
-  }
-]
+{
+  "books": [
+    {
+      "id": "complex_analysis_1",
+      "title": "Elias M. Stein, Rami Shakarchi",
+      "author": "Complex Analysis",
+      "field": "Complex Analysis",
+      "tags": [
+        "Complex Analysis"
+      ],
+      "filesize": "3.4 MB",
+      "type": "book",
+      "filename": "Elias M. Stein, Rami Shakarchi - Complex Analysis.pdf",
+      "path": "Complex Analysis/Elias M. Stein, Rami Shakarchi - Complex Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_2",
+      "title": "A. P. Calderon, A. Zygmund",
+      "author": "On the Existence of Certain Singular Integrals",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "2.0 MB",
+      "type": "book",
+      "filename": "A. P. Calderon, A. Zygmund - On the Existence of Certain Singular Integrals.pdf",
+      "path": "Fourier-Harmonic Analysis/A. P. Calderon, A. Zygmund - On the Existence of Certain Singular Integrals.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_3",
+      "title": "Allan Greenleaf",
+      "author": "Principle Curvature and Harmonic Analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "1.2 MB",
+      "type": "book",
+      "filename": "Allan Greenleaf - Principle Curvature and Harmonic Analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Allan Greenleaf - Principle Curvature and Harmonic Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_4",
+      "title": "BF02772215 (1)",
+      "author": "Unknown",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "692.7 KB",
+      "type": "book",
+      "filename": "BF02772215 (1).pdf",
+      "path": "Fourier-Harmonic Analysis/BF02772215 (1).pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_5",
+      "title": "Charles Fefferman",
+      "author": "A note on spherical summation multipliers",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "359.8 KB",
+      "type": "book",
+      "filename": "Charles Fefferman - A note on spherical summation multipliers.pdf",
+      "path": "Fourier-Harmonic Analysis/Charles Fefferman - A note on spherical summation multipliers.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_6",
+      "title": "Elias M. Stein, Rami Shakarchi",
+      "author": "Fourier Analysis_ An Introduction",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "2.3 MB",
+      "type": "book",
+      "filename": "Elias M. Stein, Rami Shakarchi - Fourier Analysis_ An Introduction.pdf",
+      "path": "Fourier-Harmonic Analysis/Elias M. Stein, Rami Shakarchi - Fourier Analysis_ An Introduction.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_7",
+      "title": "Elias M. Stein, Stephen Wainger",
+      "author": "Problems in harmonic analysis related to curvature",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "4.4 MB",
+      "type": "book",
+      "filename": "Elias M. Stein, Stephen Wainger - Problems in harmonic analysis related to curvature.pdf",
+      "path": "Fourier-Harmonic Analysis/Elias M. Stein, Stephen Wainger - Problems in harmonic analysis related to curvature.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_8",
+      "title": "Hitoshi Tanaka",
+      "author": "An Estimate for the Bochner-Riesz Operator on\nFunctions of Product Type in\n $R^{2}$",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "709.5 KB",
+      "type": "book",
+      "filename": "Hitoshi Tanaka - An Estimate for the Bochner-Riesz Operator on\nFunctions of Product Type in\n $R^{2}$.pdf",
+      "path": "Fourier-Harmonic Analysis/Hitoshi Tanaka - An Estimate for the Bochner-Riesz Operator on\nFunctions of Product Type in\n $R^{2}$.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_9",
+      "title": "Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.)",
+      "author": "Fourier Analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "9.8 MB",
+      "type": "book",
+      "filename": "Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Javier Duoandikoetxea (writ.), David Cruz-Uribe (tr.) - Fourier Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_10",
+      "title": "Loukas Grafakos",
+      "author": "Classical Fourier analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "6.6 MB",
+      "type": "book",
+      "filename": "Loukas Grafakos - Classical Fourier analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Loukas Grafakos - Classical Fourier analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_11",
+      "title": "Loukas Grafakos",
+      "author": "Modern Fourier analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "6.9 MB",
+      "type": "book",
+      "filename": "Loukas Grafakos - Modern Fourier analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Loukas Grafakos - Modern Fourier analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_12",
+      "title": "Shanzhen Lu, Dunyan Yan",
+      "author": "Bochner-Riesz Means on Euclidean Spaces",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "1.8 MB",
+      "type": "book",
+      "filename": "Shanzhen Lu, Dunyan Yan - Bochner-Riesz Means on Euclidean Spaces.pdf",
+      "path": "Fourier-Harmonic Analysis/Shanzhen Lu, Dunyan Yan - Bochner-Riesz Means on Euclidean Spaces.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_13",
+      "title": "Stein, Elias M. (editor)",
+      "author": "Beijing Lectures in Harmonic Analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "20.0 MB",
+      "type": "book",
+      "filename": "Stein, Elias M. (editor) - Beijing Lectures in Harmonic Analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Stein, Elias M. (editor) - Beijing Lectures in Harmonic Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_14",
+      "title": "Stein, Elias M.",
+      "author": "Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "22.7 MB",
+      "type": "book",
+      "filename": "Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals.pdf",
+      "path": "Fourier-Harmonic Analysis/Stein, Elias M. - Harmonic Analysis (PMS-43), Volume 43_ Real-Variable Methods, Orthogonality, and Oscillatory Integrals.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_15",
+      "title": "Stein, Elias M. _Shakarchi, Rami",
+      "author": "Functional Analysis_ Introduction to Further Topics in Analysis",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "3.3 MB",
+      "type": "book",
+      "filename": "Stein, Elias M. _Shakarchi, Rami - Functional Analysis_ Introduction to Further Topics in Analysis.pdf",
+      "path": "Fourier-Harmonic Analysis/Stein, Elias M. _Shakarchi, Rami - Functional Analysis_ Introduction to Further Topics in Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_16",
+      "title": "Stein, Elias M. _Weiss, Guido",
+      "author": "Introduction to Fourier Analysis on Euclidean Spaces",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "11.6 MB",
+      "type": "book",
+      "filename": "Stein, Elias M. _Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces.pdf",
+      "path": "Fourier-Harmonic Analysis/Stein, Elias M. _Weiss, Guido - Introduction to Fourier Analysis on Euclidean Spaces.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "fourier_harmonic_analysis_17",
+      "title": "Walter Littman",
+      "author": "Fourier Transform of Surface carried Measures",
+      "field": "Fourier Harmonic Analysis",
+      "tags": [
+        "Fourier Harmonic Analysis"
+      ],
+      "filesize": "338.3 KB",
+      "type": "book",
+      "filename": "Walter Littman - Fourier Transform of Surface carried Measures.pdf",
+      "path": "Fourier-Harmonic Analysis/Walter Littman - Fourier Transform of Surface carried Measures.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "functional_analysis_18",
+      "title": "Walter Rudin",
+      "author": "Functional analysis",
+      "field": "Functional Analysis",
+      "tags": [
+        "Functional Analysis"
+      ],
+      "filesize": "5.0 MB",
+      "type": "book",
+      "filename": "Walter Rudin - Functional analysis.pdf",
+      "path": "Functional Analysis/Walter Rudin - Functional analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "lie_algebra_19",
+      "title": "humph-solns",
+      "author": "Unknown",
+      "field": "Lie Algebra",
+      "tags": [
+        "Lie Algebra"
+      ],
+      "filesize": "363.4 KB",
+      "type": "book",
+      "filename": "humph-solns.pdf",
+      "path": "Lie Algebra/humph-solns.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "lie_algebra_20",
+      "title": "humphreys",
+      "author": "Unknown",
+      "field": "Lie Algebra",
+      "tags": [
+        "Lie Algebra"
+      ],
+      "filesize": "14.5 MB",
+      "type": "book",
+      "filename": "humphreys.pdf",
+      "path": "Lie Algebra/humphreys.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "machine_learning_21",
+      "title": "Introduction to Machine Learning with Python",
+      "author": "Unknown",
+      "field": "Machine Learning",
+      "tags": [
+        "Machine Learning"
+      ],
+      "filesize": "6.7 MB",
+      "type": "book",
+      "filename": "Introduction to Machine Learning with Python.pdf",
+      "path": "Machine Learning/Introduction to Machine Learning with Python.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "real_analysis_22",
+      "title": "Gerald B. Folland",
+      "author": "Real Analysis_ Modern Techniques and Their Applications",
+      "field": "Real Analysis",
+      "tags": [
+        "Real Analysis"
+      ],
+      "filesize": "7.9 MB",
+      "type": "book",
+      "filename": "Gerald B. Folland - Real Analysis_ Modern Techniques and Their Applications.pdf",
+      "path": "Real Analysis/Gerald B. Folland - Real Analysis_ Modern Techniques and Their Applications.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "real_analysis_23",
+      "title": "Rudin, Walter",
+      "author": "Principles of Mathematical Analysis, Third Ed",
+      "field": "Real Analysis",
+      "tags": [
+        "Real Analysis"
+      ],
+      "filesize": "4.7 MB",
+      "type": "book",
+      "filename": "Rudin, Walter - Principles of Mathematical Analysis, Third Ed.pdf",
+      "path": "Real Analysis/Rudin, Walter - Principles of Mathematical Analysis, Third Ed.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "real_analysis_24",
+      "title": "Stein, Elias M. _Shakarchi, Rami",
+      "author": "Real Analysis_ Measure Theory, Integration, and Hilbert Spaces",
+      "field": "Real Analysis",
+      "tags": [
+        "Real Analysis"
+      ],
+      "filesize": "3.0 MB",
+      "type": "book",
+      "filename": "Stein, Elias M. _Shakarchi, Rami - Real Analysis_ Measure Theory, Integration, and Hilbert Spaces.pdf",
+      "path": "Real Analysis/Stein, Elias M. _Shakarchi, Rami - Real Analysis_ Measure Theory, Integration, and Hilbert Spaces.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "real_analysis_25",
+      "title": "Walter Rudin",
+      "author": "Principles of Mathematical Analysis",
+      "field": "Real Analysis",
+      "tags": [
+        "Real Analysis"
+      ],
+      "filesize": "30.8 MB",
+      "type": "book",
+      "filename": "Walter Rudin - Principles of Mathematical Analysis.pdf",
+      "path": "Real Analysis/Walter Rudin - Principles of Mathematical Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "real_analysis_26",
+      "title": "Walter Rudin",
+      "author": "Real & Complex Analysis",
+      "field": "Real Analysis",
+      "tags": [
+        "Real Analysis"
+      ],
+      "filesize": "6.1 MB",
+      "type": "book",
+      "filename": "Walter Rudin - Real & Complex Analysis.pdf",
+      "path": "Real Analysis/Walter Rudin - Real & Complex Analysis.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "representation_theory_27",
+      "title": "Representation_of_Heisenberg_group",
+      "author": "Unknown",
+      "field": "Representation Theory",
+      "tags": [
+        "Representation Theory"
+      ],
+      "filesize": "163.0 KB",
+      "type": "book",
+      "filename": "Representation_of_Heisenberg_group.pdf",
+      "path": "Representation Theory/Representation_of_Heisenberg_group.pdf",
+      "addedDate": "2025-10-26"
+    },
+    {
+      "id": "topology_28",
+      "title": "Topology",
+      "author": "Unknown",
+      "field": "Topology",
+      "tags": [
+        "Topology"
+      ],
+      "filesize": "2.9 MB",
+      "type": "book",
+      "filename": "Topology.pdf",
+      "path": "Topology/Topology.pdf",
+      "addedDate": "2025-10-26"
+    }
+  ],
+  "generatedAt": "2025-10-26T23:52:57.419Z",
+  "totalBooks": 28,
+  "fields": [
+    "Complex Analysis",
+    "Fourier Harmonic Analysis",
+    "Functional Analysis",
+    "Lie Algebra",
+    "Machine Learning",
+    "Real Analysis",
+    "Representation Theory",
+    "Topology"
+  ]
+}
