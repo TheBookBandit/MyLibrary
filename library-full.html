@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Full - Digital Library</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">📚 Digital Library - Full</div>
+            <div class="nav-user">
+                <div id="server-status" style="margin-right: 1rem; font-size: 0.875rem;"></div>
+                <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Library Full</h1>
+        <p class="subtitle">Complete collection hosted on local network</p>
+
+        <!-- Upload Section (Moderators/Admins only) -->
+        <div id="upload-section" class="section hidden">
+            <button id="show-upload-btn" class="btn btn-success">📤 Upload New Book</button>
+            
+            <div id="upload-form-container" class="hidden">
+                <h2>Upload New Book</h2>
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title-input">Title *</label>
+                        <input type="text" id="title-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="author-input">Author *</label>
+                        <input type="text" id="author-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="field-input">Field/Genre *</label>
+                        <input type="text" id="field-input" placeholder="e.g., Computer Science, Mathematics" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tags-input">Tags (comma-separated)</label>
+                        <input type="text" id="tags-input" placeholder="e.g., algorithms, programming, data structures">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type-input">Type *</label>
+                        <select id="type-input" required>
+                            <option value="book">Book</option>
+                            <option value="article">Article</option>
+                            <option value="note">Note</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="file-input">File (PDF, EPUB, or MOBI) *</label>
+                        <input type="file" id="file-input" accept=".pdf,.epub,.mobi" required>
+                        <small style="color: var(--text-secondary);">Max file size: 100MB</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Upload Book</button>
+                        <button type="button" id="cancel-upload-btn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by title, author, or tags...">
+            <select id="field-filter">
+                <option value="">All Fields</option>
+            </select>
+            <button id="search-btn" class="btn btn-primary">Search</button>
+        </div>
+
+        <!-- Filters -->
+        <div id="filters" class="filters"></div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Books Grid -->
+        <div id="books-grid" class="books-grid"></div>
+
+        <!-- No Results -->
+        <div id="no-results" class="hidden text-center">
+            <p>No books found matching your search criteria.</p>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/library-full.js"></script>
+
+    <style>
+        .section {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        #upload-form-container {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        input[type="file"] {
+            padding: 0.5rem;
+        }
+
+        small {
+            display: block;
+            margin-top: 0.25rem;
+        }
+    </style>
+</body>
+</html>
