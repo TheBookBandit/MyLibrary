@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Lite - Digital Library</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">📚 Digital Library - Lite</div>
+            <div class="nav-user">
+                <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Library Lite</h1>
+        <p class="subtitle">Curated collection of essential books and articles</p>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by title, author, or tags...">
+            <select id="field-filter">
+                <option value="">All Fields</option>
+            </select>
+            <button id="search-btn" class="btn btn-primary">Search</button>
+        </div>
+
+        <!-- Filters -->
+        <div id="filters" class="filters"></div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Books Grid -->
+        <div id="books-grid" class="books-grid"></div>
+
+        <!-- No Results -->
+        <div id="no-results" class="hidden text-center">
+            <p>No books found matching your search criteria.</p>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdf-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="pdf-title">PDF Viewer</h2>
+                <button id="close-modal" class="btn btn-secondary">Close</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/library-lite.js"></script>
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            height: 90%;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        #pdf-viewer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</body>
+</html>

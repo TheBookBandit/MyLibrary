@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Digital Library</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">📚 Digital Library</div>
+            <div class="nav-user">
+                <span id="user-name"></span>
+                <span id="user-role" class="badge"></span>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <h1>Welcome to Your Digital Library</h1>
+            <p class="subtitle">Select a library to browse</p>
+
+            <div class="library-options">
+                <!-- Library Lite Card -->
+                <div class="library-card">
+                    <div class="library-icon">📖</div>
+                    <h2>Library Lite</h2>
+                    <p>Curated collection hosted on GitHub Pages. Quick access to essential books and articles.</p>
+                    <ul class="feature-list">
+                        <li>✓ Fast loading</li>
+                        <li>✓ Always available</li>
+                        <li>✓ Essential collection</li>
+                    </ul>
+                    <a href="library-lite.html" class="btn btn-primary">Browse Library Lite</a>
+                </div>
+
+                <!-- Library Full Card -->
+                <div class="library-card">
+                    <div class="library-icon">📚</div>
+                    <h2>Library Full</h2>
+                    <p>Complete collection hosted on local network. Access the full archive with advanced features.</p>
+                    <ul class="feature-list">
+                        <li>✓ Complete collection</li>
+                        <li>✓ LAN access only</li>
+                        <li>✓ Upload capabilities</li>
+                    </ul>
+                    <a href="library-full.html" class="btn btn-primary">Browse Library Full</a>
+                </div>
+            </div>
+
+            <!-- Admin/Moderator Panel -->
+            <div id="admin-section" class="admin-section hidden">
+                <h2>Management</h2>
+                <div class="admin-cards">
+                    <div class="admin-card">
+                        <h3>User Management</h3>
+                        <p>Approve users, manage roles, and permissions</p>
+                        <a href="admin-panel.html" class="btn btn-secondary">Manage Users</a>
+                    </div>
+                    <div id="moderator-card" class="admin-card hidden">
+                        <h3>Content Management</h3>
+                        <p>Upload books and edit metadata</p>
+                        <a href="library-full.html#upload" class="btn btn-secondary">Manage Content</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div id="recent-items" class="activity-list">
+                    <p class="text-muted">No recent activity</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Digital Library. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

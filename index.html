@@ -3,452 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathematics Library - Login</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <title>Digital Library - Login</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div id="app">
-        <!-- Login/Register Page -->
-        <div id="authPage" class="auth-page">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <h1>📚 Mathematics Library</h1>
-                    <p>Access your personal mathematical book collection</p>
-                </div>
-
-                <!-- Login Form -->
-                <div id="loginForm" class="auth-form">
-                    <h2>Sign In</h2>
-                    <form id="loginFormElement">
-                        <div class="form-group">
-                            <label for="loginEmail">Email:</label>
-                            <input type="email" id="loginEmail" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Password:</label>
-                            <input type="password" id="loginPassword" class="form-input" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary full-width">Sign In</button>
-                        </div>
-                    </form>
-                    <div class="auth-links">
-                        <a href="#" id="showRegister">Don't have an account? Register</a>
-                        <a href="#" id="showForgotPassword">Forgot Password?</a>
-                    </div>
-                </div>
-
-                <!-- Register Form -->
-                <div id="registerForm" class="auth-form" style="display: none;">
-                    <h2>Register</h2>
-                    <form id="registerFormElement">
-                        <div class="form-group">
-                            <label for="regName">Full Name:</label>
-                            <input type="text" id="regName" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="regUsername">Username:</label>
-                            <input type="text" id="regUsername" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="regEmail">Email:</label>
-                            <input type="email" id="regEmail" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="regPassword">Password:</label>
-                            <input type="password" id="regPassword" class="form-input" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label for="regConfirmPassword">Confirm Password:</label>
-                            <input type="password" id="regConfirmPassword" class="form-input" required minlength="6">
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary full-width">Register</button>
-                        </div>
-                    </form>
-                    <div class="auth-links">
-                        <a href="#" id="showLogin">Already have an account? Sign In</a>
-                    </div>
-                </div>
-
-                <!-- Forgot Password Form -->
-                <div id="forgotPasswordForm" class="auth-form" style="display: none;">
-                    <h2>Reset Password</h2>
-                    <form id="forgotPasswordFormElement">
-                        <div class="form-group">
-                            <label for="resetEmail">Email:</label>
-                            <input type="email" id="resetEmail" class="form-input" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary full-width">Send Reset Link</button>
-                        </div>
-                    </form>
-                    <div class="auth-links">
-                        <a href="#" id="backToLogin">Back to Sign In</a>
-                    </div>
-                </div>
-
-                <!-- Pending Approval Message -->
-                <div id="pendingApproval" class="auth-message" style="display: none;">
-                    <div class="message-icon">⏳</div>
-                    <h3>Account Pending Approval</h3>
-                    <p>Your registration has been submitted successfully. Please wait for admin approval before accessing the library.</p>
-                    <button id="logoutBtn" class="btn btn-secondary">Sign Out</button>
-                </div>
-
-                <!-- Loading Indicator -->
-                <div id="loadingAuth" class="loading" style="display: none;">
-                    <div class="loading-spinner"></div>
-                    <p>Please wait...</p>
-                </div>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>📚 Digital Library</h1>
+                <p>Access your personal collection</p>
             </div>
-        </div>
 
-        <!-- Library Selection Page -->
-        <div id="librarySelection" class="library-selection" style="display: none;">
-            <div class="container">
-                <header class="selection-header">
-                    <div class="user-info">
-                        <h1>📚 Welcome, <span id="userName"></span>!</h1>
-                        <div class="user-controls">
-                            <button id="editProfileBtn" class="btn btn-secondary">✏️ Edit Profile</button>
-                            <button id="adminPanelBtn" class="btn btn-secondary" style="display: none;">⚙️ Admin Panel</button>
-                            <button id="signOutBtn" class="btn btn-outline">Sign Out</button>
-                        </div>
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form active">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
                     </div>
-                </header>
-
-                <main class="selection-content">
-                    <div class="library-options">
-                        <div class="library-card" id="libraryLite">
-                            <div class="library-icon">📖</div>
-                            <h3>Library Lite</h3>
-                            <p>Essential mathematics books collection. Accessible from anywhere with internet connection.</p>
-                            <div class="library-stats">
-                                <span>~100 books</span>
-                                <span>Online Access</span>
-                            </div>
-                            <button class="btn btn-primary">Enter Library Lite</button>
-                        </div>
-
-                        <div class="library-card" id="libraryFull">
-                            <div class="library-icon">📚</div>
-                            <h3>Library Full</h3>
-                            <p>Complete mathematics books collection with extended resources. Available on local network only.</p>
-                            <div class="library-stats">
-                                <span>Full Collection</span>
-                                <span>LAN Access Only</span>
-                            </div>
-                            <button class="btn btn-primary">Enter Library Full</button>
-                        </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
                     </div>
-                </main>
-            </div>
-        </div>
-
-        <!-- LAN Access Denied Page -->
-        <div id="lanDenied" class="auth-page" style="display: none;">
-            <div class="auth-container">
-                <div class="auth-message">
-                    <div class="message-icon">🚫</div>
-                    <h3>LAN Access Required</h3>
-                    <p>Library Full is only accessible when connected to the local network. Please ensure you're connected to the home WiFi or switch to Library Lite.</p>
                     <div class="form-actions">
-                        <button id="backToSelectionBtn" class="btn btn-primary">Back to Library Selection</button>
-                        <button id="tryLibraryLiteBtn" class="btn btn-secondary">Try Library Lite</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <a href="#" id="forgot-password-link" class="link">Forgot Password?</a>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Library Interface (from previous implementation) -->
-        <div id="libraryApp" style="display: none;">
-            <!-- Header -->
-            <header class="header">
-                <div class="container">
-                    <h1 class="logo">📚 Mathematics Library</h1>
-                    <div class="header-controls">
-                        <span id="libraryMode" class="library-mode"></span>
-                        <button id="switchLibraryBtn" class="btn btn-secondary">Switch Library</button>
-                        <button id="scanBtn" class="btn btn-primary">🔄 Scan Books</button>
-                        <button id="configBtn" class="btn btn-secondary">⚙️ Configure</button>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Search and Filters -->
-            <section class="search-section">
-                <div class="container">
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="🔍 Search books, authors, or topics..." class="search-input">
-                        <button id="clearSearchBtn" class="clear-btn" style="display: none;">✕</button>
-                    </div>
-                    
-                    <div class="filters">
-                        <div class="filter-group">
-                            <label>Field:</label>
-                            <select id="fieldFilter">
-                                <option value="">All Fields</option>
-                            </select>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label>Tags:</label>
-                            <div id="tagFilters" class="tag-filters"></div>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label>Sort by:</label>
-                            <select id="sortSelect">
-                                <option value="title">Title A-Z</option>
-                                <option value="title-desc">Title Z-A</option>
-                                <option value="author">Author A-Z</option>
-                                <option value="author-desc">Author Z-A</option>
-                                <option value="field">Field A-Z</option>
-                                <option value="size">File Size</option>
-                                <option value="date">Date Added</option>
-                            </select>
-                        </div>
-                        
-                        <button id="resetFiltersBtn" class="btn btn-outline">🔄 Reset</button>
-                    </div>
-                    
-                    <div class="stats">
-                        <span id="resultsCount">0 books found</span>
-                        <span id="totalSize">Total: 0 MB</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Book Grid -->
-            <main class="main-content">
-                <div class="container">
-                    <div id="loadingIndicator" class="loading" style="display: none;">
-                        <div class="loading-spinner"></div>
-                        <p>Loading books...</p>
-                    </div>
-                    
-                    <div id="emptyState" class="empty-state" style="display: none;">
-                        <div class="empty-icon">📖</div>
-                        <h3>No books found</h3>
-                        <p>Try adjusting your search or filters, or click "Scan Books" to discover books automatically.</p>
-                    </div>
-                    
-                    <div id="booksGrid" class="books-grid"></div>
-                </div>
-            </main>
-
-            <!-- Modals from previous implementation -->
-            <!-- PDF Modal -->
-            <div id="pdfModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="modalTitle">Book Viewer</h3>
-                        <div class="modal-controls">
-                            <button id="downloadBtn" class="btn btn-small">📥 Download</button>
-                            <button id="closeModalBtn" class="btn btn-small">✕ Close</button>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div id="pdfContainer">
-                            <canvas id="pdfCanvas"></canvas>
-                            <div class="pdf-controls">
-                                <button id="prevPageBtn" class="btn btn-small">← Previous</button>
-                                <span id="pageInfo">Page 1 of 1</span>
-                                <button id="nextPageBtn" class="btn btn-small">Next →</button>
-                                <div class="zoom-controls">
-                                    <button id="zoomOutBtn" class="btn btn-small">-</button>
-                                    <span id="zoomLevel">100%</span>
-                                    <button id="zoomInBtn" class="btn btn-small">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </form>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
                 </div>
             </div>
 
-            <!-- Edit Modal -->
-            <div id="editModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Edit Book Details</h3>
-                        <button id="closeEditModalBtn" class="btn btn-small">✕</button>
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form">
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required>
                     </div>
-                    <div class="modal-body">
-                        <form id="editForm">
-                            <div class="form-group">
-                                <label for="editTitle">Title:</label>
-                                <input type="text" id="editTitle" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editAuthor">Author:</label>
-                                <input type="text" id="editAuthor" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label for="editField">Field:</label>
-                                <input type="text" id="editField" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label for="editTags">Tags (comma separated):</label>
-                                <input type="text" id="editTags" class="form-input" placeholder="analysis, calculus, advanced">
-                            </div>
-                            <div class="form-group">
-                                <label for="editDescription">Description:</label>
-                                <textarea id="editDescription" class="form-input" rows="3"></textarea>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">💾 Save Changes</button>
-                                <button type="button" id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" required>
                     </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required minlength="6">
+                    </div>
+                    <div class="alert alert-info">
+                        <p>Your account will be activated after admin approval.</p>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
                 </div>
             </div>
 
-            <!-- Configuration Modal -->
-            <div id="configModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Library Configuration</h3>
-                        <button id="closeConfigModalBtn" class="btn btn-small">✕</button>
+            <!-- Forgot Password Form -->
+            <div id="forgot-password-form" class="auth-form">
+                <h2>Reset Password</h2>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="forgot-email">Email</label>
+                        <input type="email" id="forgot-email" required>
                     </div>
-                    <div class="modal-body">
-                        <div class="config-section">
-                            <h4>📁 Directory Structure</h4>
-                            <p>Books should be organized in folders like:</p>
-                            <code>Books/Real Analysis/book1.pdf</code><br>
-                            <code>Books/Linear Algebra/book2.pdf</code>
-                            
-                            <div class="form-group">
-                                <label for="rootFolder">Root Folder Name:</label>
-                                <input type="text" id="rootFolder" value="Books" class="form-input">
-                            </div>
-                        </div>
-                        
-                        <div class="config-section">
-                            <h4>🔍 Search Settings</h4>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" id="fuzzySearch" checked> Enable fuzzy search
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="searchThreshold">Search sensitivity (0-1):</label>
-                                <input type="range" id="searchThreshold" min="0" max="1" step="0.1" value="0.4" class="form-range">
-                                <span id="thresholdValue">0.4</span>
-                            </div>
-                        </div>
-                        
-                        <div class="config-section">
-                            <h4>📊 PDF Viewer Settings</h4>
-                            <div class="form-group">
-                                <label for="maxViewerSize">Max file size for inline viewing (MB):</label>
-                                <input type="number" id="maxViewerSize" value="10" min="1" max="50" class="form-input">
-                            </div>
-                        </div>
-                        
-                        <div class="config-section">
-                            <h4>💾 Data Management</h4>
-                            <div class="form-actions">
-                                <button id="exportDataBtn" class="btn btn-secondary">📤 Export Library Data</button>
-                                <button id="importDataBtn" class="btn btn-secondary">📥 Import Library Data</button>
-                                <input type="file" id="importFileInput" accept=".json" style="display: none;">
-                            </div>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button id="saveConfigBtn" class="btn btn-primary">💾 Save Settings</button>
-                        </div>
+                    <div class="alert alert-info">
+                        <p>We'll send you a password reset link via email.</p>
                     </div>
-                </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                        <button type="button" class="btn btn-secondary" id="back-to-login">Back to Login</button>
+                    </div>
+                </form>
             </div>
-        </div>
 
-        <!-- Profile Edit Modal -->
-        <div id="profileModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Edit Profile</h3>
-                    <button id="closeProfileModalBtn" class="btn btn-small">✕</button>
-                </div>
-                <div class="modal-body">
-                    <form id="profileForm">
-                        <div class="form-group">
-                            <label for="profileName">Full Name:</label>
-                            <input type="text" id="profileName" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="profileUsername">Username:</label>
-                            <input type="text" id="profileUsername" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="profileEmail">Email:</label>
-                            <input type="email" id="profileEmail" class="form-input" required readonly>
-                            <small>Email cannot be changed. Contact admin if needed.</small>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">💾 Save Changes</button>
-                            <button type="button" id="cancelProfileBtn" class="btn btn-secondary">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Admin Panel Modal -->
-        <div id="adminModal" class="modal" style="display: none;">
-            <div class="modal-content admin-modal">
-                <div class="modal-header">
-                    <h3>Admin Panel</h3>
-                    <button id="closeAdminModalBtn" class="btn btn-small">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="admin-tabs">
-                        <button class="admin-tab active" data-tab="pending">Pending Users</button>
-                        <button class="admin-tab" data-tab="approved">All Users</button>
-                    </div>
-                    
-                    <div id="pendingUsersTab" class="admin-tab-content">
-                        <div id="pendingUsersList" class="users-list"></div>
-                    </div>
-                    
-                    <div id="approvedUsersTab" class="admin-tab-content" style="display: none;">
-                        <div id="approvedUsersList" class="users-list"></div>
-                    </div>
-                </div>
+            <!-- Messages -->
+            <div id="auth-message" class="message hidden"></div>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-        
-        // Initialize Firebase - Replace with your config
-        const firebaseConfig = {
-            apiKey: "AIzaSyCdt0HTxWn0q8vn0Zm_jifySmO7HtSrjRc",
-            authDomain: "my-library-2004.firebaseapp.com",
-            projectId: "my-library-2004",
-            storageBucket: "my-library-2004.firebasestorage.app",
-            messagingSenderId: "198113963221",
-            appId: "1:198113963221:web:fa09911d75300ce7c4065c",
-            measurementId: "G-0YYS0DT0J8"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        window.firebaseAuth = getAuth(app);
-        window.firebaseDb = getFirestore(app);
-    </script>
-
-    <!-- External Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.7.76/build/pdf.min.mjs" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
-    <!-- Application Scripts -->
-    <script src="auth.js" type="module"></script>
-    <script src="app.js" type="module"></script>
+    <!-- Custom Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

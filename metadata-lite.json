@@ -1,0 +1,40 @@
+{
+  "books": [
+    {
+      "id": "computer_science_1",
+      "title": "Introduction to Algorithms",
+      "author": "Thomas H. Cormen",
+      "field": "Computer Science",
+      "tags": ["algorithms", "data structures", "programming"],
+      "filesize": "8.5 MB",
+      "type": "book",
+      "filename": "introduction-to-algorithms.pdf",
+      "path": "Computer_Science/introduction-to-algorithms.pdf",
+      "addedDate": "2025-10-20"
+    },
+    {
+      "id": "mathematics_1",
+      "title": "Linear Algebra and Its Applications",
+      "author": "Gilbert Strang",
+      "field": "Mathematics",
+      "tags": ["linear algebra", "matrices", "vectors"],
+      "filesize": "12.3 MB",
+      "type": "book",
+      "filename": "linear-algebra.pdf",
+      "path": "Mathematics/linear-algebra.pdf",
+      "addedDate": "2025-10-18"
+    },
+    {
+      "id": "physics_1",
+      "title": "Introduction to Quantum Mechanics",
+      "author": "David J. Griffiths",
+      "field": "Physics",
+      "tags": ["quantum", "mechanics", "physics"],
+      "filesize": "7.8 MB",
+      "type": "book",
+      "filename": "quantum-mechanics.pdf",
+      "path": "Physics/quantum-mechanics.pdf",
+      "addedDate": "2025-10-15"
+    }
+  ]
+}
