@@ -67,7 +67,7 @@ function parseFilename(filename) {
     
     // Try to split by " - " separator
     if (nameWithoutExt.includes(' - ')) {
-        const [title, author] = nameWithoutExt.split(' - ').map(s => s.trim());
+        const [author, title] = nameWithoutExt.split(' - ').map(s => s.trim());
         return { title, author };
     }
     
