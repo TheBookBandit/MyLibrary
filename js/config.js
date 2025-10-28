@@ -18,7 +18,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // Raspberry Pi Configuration
-const RASPBERRY_PI_URL = 'http://localhost:3000'; // Update with your Pi's IP address
+const RASPBERRY_PI_URL = 'https://10.25.136.207:5000'; // Update with your Pi's IP address
 const PDF_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB limit for inline viewer
 
 // Export for use in other files
