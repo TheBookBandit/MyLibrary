@@ -1,14 +1,11 @@
-// Library Full JavaScript - Flask HTTPS version
+// Library Full JavaScript - Flask HTTPS with PDF Viewer
 let allBooks = [];
 let filteredBooks = [];
 let currentUser = null;
 
-// Get Raspberry Pi URL from config.js
-// Make sure config.js has: const RASPBERRY_PI_URL = 'https://10.25.136.207:5000';
 const API_URL = window.RASPBERRY_PI_URL || 'https://10.25.136.207:5000';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication
     auth.onAuthStateChanged(async (user) => {
         if (!user) {
             window.location.href = 'index.html';
@@ -25,15 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             currentUser = userDoc.data();
             
-            // Show upload section for moderators/admins
             if (currentUser.role === 'admin' || currentUser.role === 'moderator') {
                 const uploadSection = document.getElementById('upload-section');
-                if (uploadSection) {
-                    uploadSection.classList.remove('hidden');
-                }
+                if (uploadSection) uploadSection.classList.remove('hidden');
             }
             
-            // Check hash for upload section
             if (window.location.hash === '#upload') {
                 showUploadForm();
             }
@@ -48,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Logout
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', async () => {
@@ -57,11 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Search
     const searchBtn = document.getElementById('search-btn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', performSearch);
-    }
+    if (searchBtn) searchBtn.addEventListener('click', performSearch);
     
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
@@ -71,24 +60,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     const fieldFilter = document.getElementById('field-filter');
-    if (fieldFilter) {
-        fieldFilter.addEventListener('change', performSearch);
-    }
+    if (fieldFilter) fieldFilter.addEventListener('change', performSearch);
     
-    // Upload form
     const showUploadBtn = document.getElementById('show-upload-btn');
-    if (showUploadBtn) {
-        showUploadBtn.addEventListener('click', showUploadForm);
-    }
+    if (showUploadBtn) showUploadBtn.addEventListener('click', showUploadForm);
     
     const cancelUploadBtn = document.getElementById('cancel-upload-btn');
-    if (cancelUploadBtn) {
-        cancelUploadBtn.addEventListener('click', hideUploadForm);
-    }
+    if (cancelUploadBtn) cancelUploadBtn.addEventListener('click', hideUploadForm);
     
     const uploadForm = document.getElementById('upload-form');
-    if (uploadForm) {
-        uploadForm.addEventListener('submit', handleUpload);
+    if (uploadForm) uploadForm.addEventListener('submit', handleUpload);
+    
+    // Close modal handlers
+    const closeModal = document.getElementById('close-modal');
+    if (closeModal) closeModal.addEventListener('click', closePdfModal);
+    
+    const pdfModal = document.getElementById('pdf-modal');
+    if (pdfModal) {
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) closePdfModal();
+        });
     }
 });
 
@@ -104,7 +95,7 @@ async function checkServerConnection() {
             throw new Error('Server error');
         }
     } catch (error) {
-        statusEl.innerHTML = '<span style="color: #ef4444;">● Not connected - Please ensure you are on the local network</span>';
+        statusEl.innerHTML = '<span style="color: #ef4444;">● Not connected</span>';
         console.error('Server connection error:', error);
     }
 }
@@ -133,12 +124,7 @@ async function loadLibrary() {
             grid.innerHTML = `
                 <div class="alert alert-error" style="grid-column: 1 / -1;">
                     <p><strong>Connection Error</strong></p>
-                    <p>Could not connect to Library Full server. Please ensure:</p>
-                    <ul style="margin-left: 2rem;">
-                        <li>You are connected to the local network</li>
-                        <li>The Raspberry Pi server is running</li>
-                        <li>You've accepted the HTTPS certificate at: ${API_URL}/api/health</li>
-                    </ul>
+                    <p>Could not connect to Library Full server.</p>
                     <p style="margin-top: 1rem;">
                         <a href="${API_URL}/api/health" target="_blank" class="btn btn-primary">
                             Open Server & Accept Certificate
@@ -153,17 +139,13 @@ async function loadLibrary() {
 }
 
 function populateFilters() {
-    if (!Array.isArray(allBooks) || allBooks.length === 0) {
-        return;
-    }
+    if (!Array.isArray(allBooks) || allBooks.length === 0) return;
     
     try {
-        // Populate field filter
         const fields = [...new Set(allBooks.map(b => b.field))];
         const fieldFilter = document.getElementById('field-filter');
         
         if (fieldFilter) {
-            // Clear existing options except the first one
             while (fieldFilter.options.length > 1) {
                 fieldFilter.remove(1);
             }
@@ -176,7 +158,6 @@ function populateFilters() {
             });
         }
         
-        // Populate tag filters
         const allTags = [...new Set(allBooks.flatMap(b => b.tags || []))];
         const filtersContainer = document.getElementById('filters');
         
@@ -193,7 +174,6 @@ function populateFilters() {
                 }
             });
         }
-        
     } catch (error) {
         console.error('Error populating filters:', error);
     }
@@ -244,15 +224,11 @@ function displayBooks(books) {
     
     if (!books || books.length === 0) {
         grid.innerHTML = '';
-        if (noResults) {
-            noResults.classList.remove('hidden');
-        }
+        if (noResults) noResults.classList.remove('hidden');
         return;
     }
     
-    if (noResults) {
-        noResults.classList.add('hidden');
-    }
+    if (noResults) noResults.classList.add('hidden');
     
     const isModerator = currentUser && (currentUser.role === 'admin' || currentUser.role === 'moderator');
     
@@ -269,14 +245,15 @@ function displayBooks(books) {
                 ${(book.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
             </div>
             <div class="book-actions">
-                <button class="btn btn-primary" onclick="downloadBook('${escapeHtml(book.id)}')">Download</button>
+                <button class="btn btn-primary" onclick="viewBook('${escapeHtml(book.id)}')">View</button>
+                <button class="btn btn-secondary" onclick="downloadBook('${escapeHtml(book.id)}')">Download</button>
                 ${isModerator ? `<button class="btn btn-secondary" onclick="editBook('${escapeHtml(book.id)}')">Edit</button>` : ''}
             </div>
         </div>
     `).join('');
 }
 
-function downloadBook(bookId) {
+function viewBook(bookId) {
     const book = allBooks.find(b => b.id === bookId);
     if (!book) return;
     
@@ -290,7 +267,47 @@ function downloadBook(bookId) {
         });
     }
     
-    // Download from Raspberry Pi
+    // Open PDF in modal
+    openPdfModal(book);
+}
+
+function openPdfModal(book) {
+    const modal = document.getElementById('pdf-modal');
+    const viewer = document.getElementById('pdf-viewer');
+    const title = document.getElementById('pdf-title');
+    
+    if (!modal || !viewer || !title) {
+        // Fallback to opening in new tab
+        window.open(`${API_URL}/api/books/${book.id}/view`, '_blank');
+        return;
+    }
+    
+    title.textContent = book.title;
+    viewer.src = `${API_URL}/api/books/${book.id}/view`;
+    modal.classList.remove('hidden');
+}
+
+function closePdfModal() {
+    const modal = document.getElementById('pdf-modal');
+    const viewer = document.getElementById('pdf-viewer');
+    
+    if (modal) modal.classList.add('hidden');
+    if (viewer) viewer.src = '';
+}
+
+function downloadBook(bookId) {
+    const book = allBooks.find(b => b.id === bookId);
+    if (!book) return;
+    
+    if (window.saveRecentActivity) {
+        window.saveRecentActivity({
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            type: book.type
+        });
+    }
+    
     window.open(`${API_URL}/api/books/${bookId}/download`, '_blank');
 }
 
@@ -320,19 +337,14 @@ async function updateBookMetadata(bookId, updates) {
     try {
         const response = await fetch(`${API_URL}/api/books/${bookId}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates)
         });
         
-        if (!response.ok) {
-            throw new Error('Failed to update book');
-        }
+        if (!response.ok) throw new Error('Failed to update book');
         
         alert('Book updated successfully!');
         loadLibrary();
-        
     } catch (error) {
         console.error('Error updating book:', error);
         alert(`Failed to update book: ${error.message}`);
@@ -345,12 +357,8 @@ function showUploadForm() {
     const formContainer = document.getElementById('upload-form-container');
     const showBtn = document.getElementById('show-upload-btn');
     
-    if (formContainer) {
-        formContainer.classList.remove('hidden');
-    }
-    if (showBtn) {
-        showBtn.classList.add('hidden');
-    }
+    if (formContainer) formContainer.classList.remove('hidden');
+    if (showBtn) showBtn.classList.add('hidden');
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -360,15 +368,9 @@ function hideUploadForm() {
     const showBtn = document.getElementById('show-upload-btn');
     const form = document.getElementById('upload-form');
     
-    if (formContainer) {
-        formContainer.classList.add('hidden');
-    }
-    if (showBtn) {
-        showBtn.classList.remove('hidden');
-    }
-    if (form) {
-        form.reset();
-    }
+    if (formContainer) formContainer.classList.add('hidden');
+    if (showBtn) showBtn.classList.remove('hidden');
+    if (form) form.reset();
 }
 
 async function handleUpload(e) {
@@ -413,7 +415,6 @@ async function handleUpload(e) {
         alert('Book uploaded successfully!');
         hideUploadForm();
         loadLibrary();
-        
     } catch (error) {
         console.error('Error uploading book:', error);
         alert(`Failed to upload book: ${error.message}`);

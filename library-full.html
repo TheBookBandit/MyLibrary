@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Full - Digital Library</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -22,7 +23,8 @@
         <h1>Library Full</h1>
         <p class="subtitle">Complete collection hosted on local network</p>
 
-        <!-- Upload Section (Moderators/Admins only) -->
+        <!--<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+ Upload Section (Moderators/Admins only) -->
         <div id="upload-section" class="section hidden">
             <button id="show-upload-btn" class="btn btn-success">📤 Upload New Book</button>
             
@@ -136,6 +138,102 @@
             display: block;
             margin-top: 0.25rem;
         }
+    </style>
+
+    <!-- Add this modal HTML before the closing </body> tag in library-full.html -->
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdf-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="pdf-title">PDF Viewer</h2>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdf-viewer" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add these styles to your CSS file or in <style> tag -->
+    <style>
+    .modal {
+        display: flex;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.hidden {
+        display: none;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        width: 90%;
+        height: 90%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        background-color: #f9fafb;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #111827;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #6b7280;
+        line-height: 1;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+        background-color: #e5e7eb;
+        color: #111827;
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    #pdf-viewer {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
     </style>
 </body>
 </html>
