@@ -1,21 +1,20 @@
-// Library Full JavaScript - Nginx + Node.js Upload Server version
+// Library Full JavaScript - Connects to Raspberry Pi
 let allBooks = [];
 let filteredBooks = [];
 let currentUser = null;
-const UPLOAD_SERVER_URL = 'http://10.25.136.207:3000'; // Update with your Pi IP
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check authentication
     auth.onAuthStateChanged(async (user) => {
         if (!user) {
-            window.location.href = '/index.html';
+            window.location.href = 'index.html';
             return;
         }
         
         const userDoc = await db.collection('users').doc(user.uid).get();
         if (!userDoc.exists || !userDoc.data().approved) {
             await auth.signOut();
-            window.location.href = '/index.html';
+            window.location.href = 'index.html';
             return;
         }
         
@@ -31,14 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
             showUploadForm();
         }
         
-        checkServerStatus();
+        checkServerConnection();
         loadLibrary();
     });
     
     // Logout
     document.getElementById('logout-btn')?.addEventListener('click', async () => {
         await auth.signOut();
-        window.location.href = '/index.html';
+        window.location.href = 'index.html';
     });
     
     // Search
@@ -55,19 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('upload-form')?.addEventListener('submit', handleUpload);
 });
 
-async function checkServerStatus() {
+async function checkServerConnection() {
     const statusEl = document.getElementById('server-status');
     
     try {
-        const response = await fetch(`${UPLOAD_SERVER_URL}/api/health`);
+        const response = await fetch(`${RASPBERRY_PI_URL}/api/health`);
         if (response.ok) {
-            statusEl.innerHTML = '<span style="color: #10b981;">● Server connected</span>';
+            statusEl.innerHTML = '<span style="color: #10b981;">● Connected to Library Full</span>';
         } else {
             throw new Error('Server error');
         }
     } catch (error) {
-        statusEl.innerHTML = '<span style="color: #ef4444;">● Server not responding</span>';
-        console.warn('Upload server not available - uploads will not work');
+        statusEl.innerHTML = '<span style="color: #ef4444;">● Not connected - Please ensure you are on the local network</span>';
+        console.error('Server connection error:', error);
     }
 }
 
@@ -75,15 +74,14 @@ async function loadLibrary() {
     showLoading(true);
     
     try {
-        // Fetch metadata as static JSON file from Nginx
-        const response = await fetch('/data/metadata-full.json');
+        const response = await fetch(`${RASPBERRY_PI_URL}/api/metadata`);
         
         if (!response.ok) {
-            throw new Error('Failed to load metadata');
+            throw new Error('Failed to fetch metadata');
         }
         
         const data = await response.json();
-        allBooks = data.books || [];
+        allBooks = data.books;
         filteredBooks = allBooks;
         
         populateFilters();
@@ -93,9 +91,13 @@ async function loadLibrary() {
         console.error('Error loading library:', error);
         document.getElementById('books-grid').innerHTML = `
             <div class="alert alert-error">
-                <p><strong>Error Loading Library</strong></p>
-                <p>Could not load metadata file. Please check if metadata-full.json exists.</p>
-                <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
+                <p><strong>Connection Error</strong></p>
+                <p>Could not connect to Library Full server. Please ensure:</p>
+                <ul style="margin-left: 2rem;">
+                    <li>You are connected to the local network</li>
+                    <li>The Raspberry Pi server is running</li>
+                    <li>The IP address in config.js is correct</li>
+                </ul>
             </div>
         `;
     } finally {
@@ -210,11 +212,8 @@ function downloadBook(bookId) {
         });
     }
     
-    // Download from local server
-    const link = document.createElement('a');
-    link.href = `/data/books-full/${book.path}`;
-    link.download = book.filename;
-    link.click();
+    // Download from Raspberry Pi
+    window.open(`${RASPBERRY_PI_URL}/api/books/${bookId}/download`, '_blank');
 }
 
 function editBook(bookId) {
@@ -241,7 +240,7 @@ async function updateBookMetadata(bookId, updates) {
     showLoading(true);
     
     try {
-        const response = await fetch(`${UPLOAD_SERVER_URL}/api/books/${bookId}`, {
+        const response = await fetch(`${RASPBERRY_PI_URL}/api/books/${bookId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -250,8 +249,7 @@ async function updateBookMetadata(bookId, updates) {
         });
         
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Failed to update book');
+            throw new Error('Failed to update book');
         }
         
         alert('Book updated successfully!');
@@ -259,7 +257,7 @@ async function updateBookMetadata(bookId, updates) {
         
     } catch (error) {
         console.error('Error updating book:', error);
-        alert(`Failed to update book: ${error.message}`);
+        alert('Failed to update book. Please try again.');
     } finally {
         showLoading(false);
     }
@@ -280,14 +278,8 @@ function hideUploadForm() {
 async function handleUpload(e) {
     e.preventDefault();
     
-    const file = document.getElementById('file-input').files[0];
-    if (!file) {
-        alert('Please select a file');
-        return;
-    }
-    
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', document.getElementById('file-input').files[0]);
     formData.append('title', document.getElementById('title-input').value);
     formData.append('author', document.getElementById('author-input').value);
     formData.append('field', document.getElementById('field-input').value);
@@ -297,7 +289,7 @@ async function handleUpload(e) {
     showLoading(true);
     
     try {
-        const response = await fetch(`${UPLOAD_SERVER_URL}/api/upload`, {
+        const response = await fetch(`${RASPBERRY_PI_URL}/api/books`, {
             method: 'POST',
             body: formData
         });
