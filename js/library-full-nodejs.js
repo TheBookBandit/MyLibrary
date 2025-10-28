@@ -2,7 +2,7 @@
 let allBooks = [];
 let filteredBooks = [];
 let currentUser = null;
-const UPLOAD_SERVER_URL = 'http://10.25.136.207:3000'; // Update with your Pi IP
+const UPLOAD_SERVER_URL = 'https://10.25.136.207:5000'; // Update with your Pi IP
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check authentication
