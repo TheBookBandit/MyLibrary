@@ -1,246 +1,278 @@
-// Admin Panel JavaScript
-let currentAdmin = null;
+// Admin Panel JavaScript - Updated with user management
+let currentUser = null;
+let allUsers = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication and admin role
+    // Check authentication and admin status
     auth.onAuthStateChanged(async (user) => {
         if (!user) {
             window.location.href = 'index.html';
             return;
         }
         
-        const userDoc = await db.collection('users').doc(user.uid).get();
-        const userData = userDoc.data();
-        
-        if (!userData || !userData.approved || userData.role !== 'admin') {
-            alert('Access denied. Admin privileges required.');
-            window.location.href = 'dashboard.html';
-            return;
+        try {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            
+            if (!userDoc.exists) {
+                await auth.signOut();
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            currentUser = userDoc.data();
+            
+            // Check if user is admin
+            if (currentUser.role !== 'admin') {
+                document.body.innerHTML = `
+                    <div style="padding: 2rem; text-align: center;">
+                        <h1>Access Denied</h1>
+                        <p>You do not have permission to access the admin panel.</p>
+                        <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // User is admin, load content
+            loadAdminContent();
+            
+        } catch (error) {
+            console.error('Error checking user:', error);
+            await auth.signOut();
+            window.location.href = 'index.html';
         }
-        
-        currentAdmin = userData;
-        loadPendingUsers();
-        loadActiveUsers();
     });
     
     // Logout
-    document.getElementById('logout-btn')?.addEventListener('click', async () => {
-        await auth.signOut();
-        window.location.href = 'index.html';
-    });
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = 'index.html';
+        });
+    }
     
-    // User search
-    document.getElementById('user-search')?.addEventListener('input', (e) => {
-        filterActiveUsers(e.target.value);
+    // Tab navigation
+    const tabs = document.querySelectorAll('[data-tab]');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', switchTab);
     });
 });
 
-async function loadPendingUsers() {
-    const container = document.getElementById('pending-users');
+function switchTab(e) {
+    const tabName = e.target.getAttribute('data-tab');
     
-    try {
-        const pendingSnapshot = await db.collection('pendingUsers').orderBy('requestedAt', 'desc').get();
-        
-        if (pendingSnapshot.empty) {
-            container.innerHTML = '<div class="no-users">No pending approvals</div>';
-            return;
-        }
-        
-        const pendingUsers = [];
-        
-        for (const doc of pendingSnapshot.docs) {
-            const pendingData = doc.data();
-            const userDoc = await db.collection('users').doc(doc.id).get();
-            const userData = userDoc.data();
-            
-            // Only show if not yet approved
-            if (userData && !userData.approved) {
-                pendingUsers.push({
-                    id: doc.id,
-                    ...pendingData,
-                    ...userData
-                });
-            }
-        }
-        
-        if (pendingUsers.length === 0) {
-            container.innerHTML = '<div class="no-users">No pending approvals</div>';
-            return;
-        }
-        
-        container.innerHTML = pendingUsers.map(user => `
-            <div class="user-card">
-                <div class="user-info">
-                    <h3>${escapeHtml(user.name)}</h3>
-                    <div class="user-meta">
-                        ${escapeHtml(user.email)} • @${escapeHtml(user.username)}
-                    </div>
-                    <div class="user-meta">
-                        Requested: ${formatDate(user.requestedAt)}
-                    </div>
-                </div>
-                <div class="user-actions">
-                    <button class="btn btn-success" onclick="approveUser('${user.id}')">Approve</button>
-                    <button class="btn btn-danger" onclick="rejectUser('${user.id}')">Reject</button>
-                </div>
-            </div>
-        `).join('');
-        
-    } catch (error) {
-        console.error('Error loading pending users:', error);
-        container.innerHTML = '<div class="no-users">Error loading pending users</div>';
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    const selectedTab = document.getElementById(tabName);
+    if (selectedTab) {
+        selectedTab.classList.remove('hidden');
+    }
+    
+    e.target.classList.add('active');
+    
+    // Load data based on tab
+    if (tabName === 'pending-approvals') {
+        loadPendingUsers();
+    } else if (tabName === 'all-users') {
+        loadAllUsers();
     }
 }
 
-let allActiveUsers = [];
+function loadAdminContent() {
+    // Load pending users by default
+    loadPendingUsers();
+}
 
-async function loadActiveUsers() {
-    const container = document.getElementById('active-users');
-    
+async function loadPendingUsers() {
     try {
-        const usersSnapshot = await db.collection('users')
+        const snapshot = await db.collection('users')
+            .where('approved', '==', false)
+            .orderBy('createdAt', 'desc')
+            .get();
+        
+        const pendingContainer = document.getElementById('pending-users-list');
+        if (!pendingContainer) return;
+        
+        if (snapshot.empty) {
+            pendingContainer.innerHTML = '<p style="text-align: center; color: #6b7280;">No pending approvals</p>';
+            return;
+        }
+        
+        let html = '<table class="users-table"><thead><tr><th>Email</th><th>Name</th><th>Created</th><th>Actions</th></tr></thead><tbody>';
+        
+        snapshot.forEach(doc => {
+            const user = doc.data();
+            const createdDate = user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'N/A';
+            
+            html += `
+                <tr>
+                    <td>${escapeHtml(user.email)}</td>
+                    <td>${escapeHtml(user.name || 'N/A')}</td>
+                    <td>${createdDate}</td>
+                    <td>
+                        <button class="btn btn-small btn-success" onclick="approveUser('${doc.id}')">
+                            Approve
+                        </button>
+                        <button class="btn btn-small btn-danger" onclick="rejectUser('${doc.id}')">
+                            Reject
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        html += '</tbody></table>';
+        pendingContainer.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Error loading pending users:', error);
+        const pendingContainer = document.getElementById('pending-users-list');
+        if (pendingContainer) {
+            pendingContainer.innerHTML = `<div class="alert alert-error">Error loading pending users: ${error.message}</div>`;
+        }
+    }
+}
+
+async function loadAllUsers() {
+    try {
+        const snapshot = await db.collection('users')
             .where('approved', '==', true)
             .orderBy('createdAt', 'desc')
             .get();
         
-        if (usersSnapshot.empty) {
-            container.innerHTML = '<div class="no-users">No active users</div>';
+        const allUsersContainer = document.getElementById('all-users-list');
+        if (!allUsersContainer) return;
+        
+        if (snapshot.empty) {
+            allUsersContainer.innerHTML = '<p style="text-align: center; color: #6b7280;">No approved users</p>';
             return;
         }
         
-        allActiveUsers = usersSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        let html = '<table class="users-table"><thead><tr><th>Email</th><th>Name</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead><tbody>';
         
-        displayActiveUsers(allActiveUsers);
+        snapshot.forEach(doc => {
+            const user = doc.data();
+            const createdDate = user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'N/A';
+            const role = user.role || 'user';
+            
+            html += `
+                <tr>
+                    <td>${escapeHtml(user.email)}</td>
+                    <td>${escapeHtml(user.name || 'N/A')}</td>
+                    <td>
+                        <span class="badge badge-${role}">${role}</span>
+                    </td>
+                    <td>${createdDate}</td>
+                    <td>
+                        ${role === 'admin' ? '<span style="color: #999;">Admin</span>' : `
+                            <button class="btn btn-small btn-primary" onclick="promoteModerator('${doc.id}')">
+                                Make Moderator
+                            </button>
+                        `}
+                        <button class="btn btn-small btn-danger" onclick="removeUser('${doc.id}')">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        html += '</tbody></table>';
+        allUsersContainer.innerHTML = html;
         
     } catch (error) {
-        console.error('Error loading active users:', error);
-        container.innerHTML = '<div class="no-users">Error loading active users</div>';
+        console.error('Error loading all users:', error);
+        const allUsersContainer = document.getElementById('all-users-list');
+        if (allUsersContainer) {
+            allUsersContainer.innerHTML = `<div class="alert alert-error">Error loading users: ${error.message}</div>`;
+        }
     }
-}
-
-function displayActiveUsers(users) {
-    const container = document.getElementById('active-users');
-    
-    if (users.length === 0) {
-        container.innerHTML = '<div class="no-users">No users found</div>';
-        return;
-    }
-    
-    container.innerHTML = users.map(user => `
-        <div class="user-card">
-            <div class="user-info">
-                <h3>${escapeHtml(user.name)}</h3>
-                <div class="user-meta">
-                    ${escapeHtml(user.email)} • @${escapeHtml(user.username)}
-                </div>
-                <div class="user-meta">
-                    Role: <span class="badge badge-${user.role}">${user.role}</span> • 
-                    Joined: ${formatDate(user.createdAt)}
-                </div>
-            </div>
-            <div class="user-actions">
-                ${user.role !== 'admin' ? `
-                    <select onchange="changeUserRole('${user.id}', this.value)" class="role-select">
-                        <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
-                        <option value="moderator" ${user.role === 'moderator' ? 'selected' : ''}>Moderator</option>
-                    </select>
-                ` : '<span class="badge badge-admin">Admin</span>'}
-            </div>
-        </div>
-    `).join('');
-}
-
-function filterActiveUsers(query) {
-    const filtered = allActiveUsers.filter(user => 
-        user.name.toLowerCase().includes(query.toLowerCase()) ||
-        user.email.toLowerCase().includes(query.toLowerCase()) ||
-        user.username.toLowerCase().includes(query.toLowerCase())
-    );
-    displayActiveUsers(filtered);
 }
 
 async function approveUser(userId) {
-    if (!confirm('Approve this user?')) return;
+    if (!confirm('Are you sure you want to approve this user?')) {
+        return;
+    }
     
     try {
-        // Update user document
         await db.collection('users').doc(userId).update({
-            approved: true
+            approved: true,
+            approvedAt: new Date(),
+            role: 'user'
         });
-        
-        // Remove from pending
-        await db.collection('pendingUsers').doc(userId).delete();
         
         alert('User approved successfully!');
         loadPendingUsers();
-        loadActiveUsers();
         
     } catch (error) {
         console.error('Error approving user:', error);
-        alert('Failed to approve user. Please try again.');
+        alert(`Failed to approve user: ${error.message}`);
     }
 }
 
 async function rejectUser(userId) {
-    if (!confirm('Reject this user? This will delete their account.')) return;
+    if (!confirm('Are you sure you want to reject this user? This cannot be undone.')) {
+        return;
+    }
     
     try {
-        // Delete from users collection
         await db.collection('users').doc(userId).delete();
-        
-        // Delete from pending
-        await db.collection('pendingUsers').doc(userId).delete();
-        
-        // Note: You cannot delete the Firebase Auth user from client-side
-        // This would need to be done via Firebase Admin SDK on a backend
-        // For now, the user can still log in but won't have access
-        
-        alert('User rejected successfully!');
+        alert('User rejected and removed successfully!');
         loadPendingUsers();
         
     } catch (error) {
         console.error('Error rejecting user:', error);
-        alert('Failed to reject user. Please try again.');
+        alert(`Failed to reject user: ${error.message}`);
     }
 }
 
-async function changeUserRole(userId, newRole) {
-    if (!confirm(`Change user role to ${newRole}?`)) {
-        loadActiveUsers(); // Reset the select
+async function promoteModerator(userId) {
+    if (!confirm('Are you sure you want to make this user a moderator?')) {
         return;
     }
     
     try {
         await db.collection('users').doc(userId).update({
-            role: newRole
+            role: 'moderator'
         });
         
-        alert('User role updated successfully!');
-        loadActiveUsers();
+        alert('User promoted to moderator!');
+        loadAllUsers();
         
     } catch (error) {
-        console.error('Error changing user role:', error);
-        alert('Failed to change user role. Please try again.');
-        loadActiveUsers();
+        console.error('Error promoting user:', error);
+        alert(`Failed to promote user: ${error.message}`);
     }
 }
 
-function formatDate(timestamp) {
-    if (!timestamp) return 'N/A';
+async function removeUser(userId) {
+    if (!confirm('Are you sure you want to remove this user? This cannot be undone.')) {
+        return;
+    }
     
-    // Handle Firestore Timestamp
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
-    });
+    try {
+        await db.collection('users').doc(userId).delete();
+        alert('User removed successfully!');
+        loadAllUsers();
+        
+    } catch (error) {
+        console.error('Error removing user:', error);
+        alert(`Failed to remove user: ${error.message}`);
+    }
 }
 
 function escapeHtml(text) {
+    if (!text) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
